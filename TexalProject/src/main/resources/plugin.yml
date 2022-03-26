@@ -1,0 +1,4 @@
+name: Texal
+version: 1.0
+api-version: 1.18
+main: io.github.dadpea.texal.Texal
