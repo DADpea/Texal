@@ -1,0 +1,20 @@
+[
+  {
+    "uuid": "dd6a1de3-de39-401f-867a-c380cd9c0649",
+    "name": "Emlisy",
+    "level": 4,
+    "bypassesPlayerLimit": false
+  },
+  {
+    "uuid": "61d68835-2284-41cd-b4fd-a446ed52e246",
+    "name": "DADp",
+    "level": 4,
+    "bypassesPlayerLimit": false
+  },
+  {
+    "uuid": "e7b721cb-14e5-40fd-b113-d2597833982b",
+    "name": "Emlist",
+    "level": 4,
+    "bypassesPlayerLimit": false
+  }
+]

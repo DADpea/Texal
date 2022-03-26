@@ -1,0 +1,9 @@
+io\github\dadpea\texal\Rank.class
+io\github\dadpea\texal\commands\FlightspeedCommand.class
+io\github\dadpea\texal\Texal.class
+io\github\dadpea\texal\ColorConvert.class
+io\github\dadpea\texal\commands\PrefixTestCommand.class
+io\github\dadpea\texal\commands\UnloadWorldCommand.class
+io\github\dadpea\texal\commands\WorldTestCommand.class
+io\github\dadpea\texal\commands\Prefix.class
+io\github\dadpea\texal\PlayerState.class

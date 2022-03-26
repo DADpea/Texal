@@ -1,0 +1,19 @@
+name: Texal
+version: 1.0
+api-version: 1.18
+main: io.github.dadpea.texal.Texal
+
+commands:
+  fs:
+    description: Change flightspeed
+    usage: /fs
+    aliases: [flightspeed]
+  prefixTest:
+    description: Test Prefix
+    usage: /prefixTest
+  worldTest:
+    description: Test world
+    usage: /worldTest
+  unloadWorld:
+    description: Unload World
+    usage: /unloadWorld
