@@ -11,3 +11,9 @@ commands:
   prefixTest:
     description: Test Prefix
     usage: /prefixTest
+  worldTest:
+    description: Test world
+    usage: /worldTest
+  unloadWorld:
+    description: Unload World
+    usage: /unloadWorld
