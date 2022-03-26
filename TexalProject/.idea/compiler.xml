@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="TexalProject" target="1.5" />
+      <module name="TexalProject" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
