@@ -9,7 +9,6 @@ public class Texal extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getCommand("fs").setExecutor(new FlightspeedCommand());
-        this.getCommand("flightspeed").setExecutor(new FlightspeedCommand());
 
     }
     @Override

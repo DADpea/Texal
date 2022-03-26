@@ -1,11 +1,11 @@
 package io.github.dadpea.texal.commands;
 
-import org.bukkit.Color;
+import org.bukkit.ChatColor;
 
 public enum Prefix {
-    PREFIX_SUCCESS(Color.AQUA + "[S] " + Color.SILVER),
-    PREFIX_FAILURE(Color.RED + "[F] " + Color.SILVER),
-    PREFIX_INFO(Color.ORANGE + "[I] " + Color.SILVER);
+    PREFIX_SUCCESS(ChatColor.AQUA + "#✔ " + ChatColor.getByChar("#dbc491")),
+    PREFIX_FAILURE(ChatColor.RED + "#✖ " + ChatColor.getByChar("#dbc491")),
+    PREFIX_INFO(ChatColor.GOLD + "#! " + ChatColor.getByChar("#dbc491"));
 
     String s;
     private Prefix(String s) {
