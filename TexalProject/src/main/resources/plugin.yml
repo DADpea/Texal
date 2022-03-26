@@ -7,3 +7,7 @@ commands:
   fs:
     description: Change flightspeed
     usage: /fs
+    aliases: [flightspeed]
+  prefixTest:
+    description: Test Prefix
+    usage: /prefixTest

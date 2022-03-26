@@ -4,9 +4,9 @@ import io.github.dadpea.texal.ColorConvert;
 import org.bukkit.ChatColor;
 
 public enum Prefix {
-    PREFIX_SUCCESS(ColorConvert.fromHex("#b7db91") + "#✔ " + ColorConvert.fromHex("#dbc491")),
-    PREFIX_FAILURE(ColorConvert.fromHex("#db4848") + "#✖ " + ColorConvert.fromHex("#dbc491")),
-    PREFIX_INFO(ChatColor.GOLD + "#! " + ColorConvert.fromHex("#dbc491"));
+    PREFIX_SUCCESS(ColorConvert.fromHex("#bbdd99") + "" + ChatColor.BOLD + "✔ " + ColorConvert.fromHex("#88dd77")),
+    PREFIX_FAILURE(ColorConvert.fromHex("#dd5050") + "" + ChatColor.BOLD + "✖ " + ColorConvert.fromHex("#dd2020")),
+    PREFIX_INFO(ColorConvert.fromHex("#ccffff") + "" + ChatColor.BOLD + "! " + ColorConvert.fromHex("#88FFFF"));  // fix this later O_O
 
     String s;
     private Prefix(String s) {

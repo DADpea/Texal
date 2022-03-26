@@ -30,6 +30,5 @@ public class FlightspeedCommand implements CommandExecutor {
         p.setFlySpeed(fs / 1000f);
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Flightspeed set to: " + fs + "%.");
         return true;
-
     }
 }
