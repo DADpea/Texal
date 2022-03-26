@@ -7,7 +7,8 @@ public class ColorConvert {
         if (s.length()!=7) {
             throw new IllegalArgumentException("Hex must be seven chars, beginning with a #");
         }
-        return ChatColor.COLOR_CHAR + "" + s.charAt(1)
+        return ChatColor.COLOR_CHAR + "x"
+             + ChatColor.COLOR_CHAR + "" + s.charAt(1)
              + ChatColor.COLOR_CHAR + "" + s.charAt(2)
              + ChatColor.COLOR_CHAR + "" + s.charAt(3)
              + ChatColor.COLOR_CHAR + "" + s.charAt(4)
