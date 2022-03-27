@@ -8,7 +8,7 @@ public enum Prefix {
     PREFIX_SUCCESS(GREEN + "" + ChatColor.BOLD + "✔ " + DARK_GREEN),
     PREFIX_FAILURE(RED + "" + ChatColor.BOLD + "✖ " + DARK_RED),
     PREFIX_INFO(YELLOW + "" + ChatColor.BOLD + "! " + DARK_YELLOW),
-    PREFIX_SERVER_INFO(LIGHT_GRAY + "" + ChatColor.BOLD + "> " + WHITE);
+    PREFIX_SERVER_INFO(WHITE + "" + ChatColor.BOLD + "> " + LIGHT_GRAY);
 
     String s;
     private Prefix(String s) {

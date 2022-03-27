@@ -10,9 +10,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class QuitEvent implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
+        e.setQuitMessage("");
         Player p = e.getPlayer();
         for (Player p1 : Bukkit.getOnlinePlayers()) {
-            p1.sendMessage(Prefix.PREFIX_SERVER_INFO + "" + p.getDisplayName() + " joined!");
+            p1.sendMessage(Prefix.PREFIX_SERVER_INFO + "" + p.getDisplayName() + " left.");
         }
     }
 }
