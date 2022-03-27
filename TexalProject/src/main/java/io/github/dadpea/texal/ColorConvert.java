@@ -21,7 +21,7 @@ public class ColorConvert {
     }
 
     public static String translateColorCodes(String s) {
-        return s.replaceAll("#([0-9A-Fa-f]){6}",
+        return s.replaceAll("#([0-9A-Fa-f])([0-9A-Fa-f])([0-9A-Fa-f])([0-9A-Fa-f])([0-9A-Fa-f])([0-9A-Fa-f])",
 COLOR_CHAR + "x"
         + COLOR_CHAR + "$1"
         + COLOR_CHAR + "$2"

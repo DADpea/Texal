@@ -20,3 +20,7 @@ commands:
   newplot:
     description: Makes a new plot, temporary
     usage: /newplot <SMALL,MEDIUM,LARGE>
+  sll:
+    description: Edits lore lines
+    usage: /sll <index> <string>
+

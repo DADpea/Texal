@@ -2,10 +2,12 @@ package io.github.dadpea.texal;
 
 import io.github.dadpea.texal.commands.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +28,8 @@ public class Texal extends JavaPlugin implements Listener {
 
         this.getCommand("newplot").setExecutor(new NewPlotCommand()); // temp
 
+        this.getCommand("sll").setExecutor(new LoreLineCommand());
+
         this.getServer().getPluginManager().registerEvents(this, this);
     }
 
@@ -42,5 +46,11 @@ public class Texal extends JavaPlugin implements Listener {
             p.sendMessage(Prefix.PREFIX_SERVER_INFO + "" + p.getDisplayName() + " joined!");
         }
         p.teleport(spawnPoint);
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent e) {
+//            System.out.println(e.getBlock().getLocation());
+
     }
 }
