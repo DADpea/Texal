@@ -36,12 +36,12 @@ public class PlotChunkGenerator extends ChunkGenerator {
     public void generateSurface(WorldInfo worldInfo, Random random, int x, int z, ChunkData chunkData) {
          if (x >= 0 && z >= 0 && x < plotSize.size && z < plotSize.size) {
             chunkData.setRegion(0, 0, 0, 16, 1, 16, Material.GRASS_BLOCK);
-            chunkData.setRegion(0, -1, 0, 16, 0, 16, Material.DIRT);
+            chunkData.setRegion(0, -3, 0, 16, 0, 16, Material.DIRT);
             chunkData.setRegion(0, -4, 0, 16, -3, 16, Material.BEDROCK);
             if (x==0) chunkData.setRegion(0, 0, 0, 1, 1, 16, plotSize.borderMat);
-            if (x==plotSize.size-1) chunkData.setRegion(15, 0, 1, 16, 0, 16, plotSize.borderMat);
+            if (x==plotSize.size-1) chunkData.setRegion(15, 0, 1, 16, 1, 16, plotSize.borderMat);
             if (z==0) chunkData.setRegion(0, 0, 0, 16, 1, 1, plotSize.borderMat);
-            if (z==plotSize.size-1) chunkData.setRegion(15, 0, 1, 16, 0, 16, plotSize.borderMat);
+            if (z==plotSize.size-1) chunkData.setRegion(15, 0, 1, 16, 1, 16, plotSize.borderMat);
          }
     }
 }
