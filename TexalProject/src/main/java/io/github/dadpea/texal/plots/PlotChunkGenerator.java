@@ -35,13 +35,20 @@ public class PlotChunkGenerator extends ChunkGenerator {
     @Override
     public void generateSurface(WorldInfo worldInfo, Random random, int x, int z, ChunkData chunkData) {
          if (x >= 0 && z >= 0 && x < plotSize.size && z < plotSize.size) {
-            chunkData.setRegion(0, 0, 0, 15, 0, 15, Material.GRASS_BLOCK);
-            chunkData.setRegion(0, -1, 0, 15, -1, 15, Material.DIRT);
-            chunkData.setRegion(0, -4, 0, 15, -4, 15, Material.BEDROCK);
-            if (x==0) chunkData.setRegion(0, 0, 0, 0, 0, 15, plotSize.borderMat);
-            if (x==plotSize.size-1) chunkData.setRegion(15, 0, 0, 15, 0, 15, plotSize.borderMat);
-            if (z==0) chunkData.setRegion(0, 0, 0, 15, 0, 0, plotSize.borderMat);
-            if (z==plotSize.size-1) chunkData.setRegion(15, 0, 0, 15, 0, 15, plotSize.borderMat);
+            setRegion(chunkData, 0, 0, 0, 16, 0, 16, Material.GRASS_BLOCK);
+            setRegion(chunkData, 0, -1, 0, 16, -1, 16, Material.DIRT);
+            setRegion(chunkData, 0, -4, 0, 16, -4, 16, Material.BEDROCK);
+            if (x==0) setRegion(chunkData, 0, 0, 0, 0, 0, 16, plotSize.borderMat);
+            if (x==plotSize.size-1) setRegion(chunkData, 16, 0, 0, 16, 0, 16, plotSize.borderMat);
+            if (z==0) setRegion(chunkData, 0, 0, 0, 16, 0, 0, plotSize.borderMat);
+            if (z==plotSize.size-1) setRegion(chunkData, 16, 0, 0, 16, 0, 16, plotSize.borderMat);
          }
+    }
+
+    public void setRegion(ChunkData c, int minx, int miny, int minz, int maxx, int maxy, int maxz, Material m) {
+        for (int x = minx; x < maxx; x++)
+            for (int y = miny; y < maxy; y++)
+                for (int z = minz; z < maxz; z++)
+                    c.setBlock(x,y,z,m);
     }
 }
