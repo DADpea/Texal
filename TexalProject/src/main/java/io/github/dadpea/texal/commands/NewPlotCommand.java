@@ -19,10 +19,16 @@ public class NewPlotCommand implements CommandExecutor {
 
         Player p = (Player) sender;
 
-        Plot plot = new Plot(PlotSize.LARGE);
+        if (args.length==0) {
+            p.sendMessage(Prefix.PREFIX_FAILURE + "Expected input.");
+            return true;
+        }
+        PlotSize plotsize = PlotSize.SMALL;
+        if (args[0].equals("MEDIUM")) plotsize = PlotSize.MEDIUM;
+        if (args[0].equals("LARGE")) plotsize = PlotSize.LARGE;
+        Plot plot = new Plot(plotsize);
         plot.joinWorld(p);
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Joined plot: " + plot.getID() + ".");
         return true;
     }
-
 }
