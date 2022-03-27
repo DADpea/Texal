@@ -11,12 +11,12 @@ commands:
   prefixTest:
     description: Test Prefix
     usage: /prefixTest
-  worldTest:
-    description: Test world
-    usage: /worldTest
-  unloadWorld:
+  loadworld:
+    description: Load World
+    usage: /loadworld
+  unloadworld:
     description: Unload World
-    usage: /unloadWorld
+    usage: /unloadworld
   newplot:
     description: Makes a new plot, temporary
     usage: /newplot <SMALL,MEDIUM,LARGE>

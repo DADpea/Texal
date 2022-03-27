@@ -19,10 +19,10 @@ public class Texal extends JavaPlugin implements Listener {
         this.getCommand("fs").setExecutor(new FlightspeedCommand());
         this.getCommand("flightspeed").setExecutor(new FlightspeedCommand());
 
-        this.getCommand("prefixTest").setExecutor(new PrefixTestCommand());
+        this.getCommand("prefixtest").setExecutor(new PrefixTestCommand());
 
-        this.getCommand("worldTest").setExecutor(new WorldTestCommand()); // temp
-        this.getCommand("unloadWorld").setExecutor(new UnloadWorldCommand()); // temp
+        this.getCommand("loadworld").setExecutor(new LoadWorldCommand()); // temp
+        this.getCommand("unloadworld").setExecutor(new UnloadWorldCommand()); // temp
 
         this.getCommand("newplot").setExecutor(new NewPlotCommand()); // temp
 
