@@ -1,6 +1,7 @@
-package io.github.dadpea.texal.commands;
+package io.github.dadpea.texal.commands.itemManipulation;
 
 import io.github.dadpea.texal.ColorConvert;
+import io.github.dadpea.texal.commands.Prefix;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -37,12 +38,12 @@ public class LoreLineCommand implements CommandExecutor {
         int index;
         try {
             index = Integer.parseInt(args[0]);
+            if (index<=0) {
+                p.sendMessage(Prefix.PREFIX_FAILURE + "Index must be < 0 ");
+                return true;
+            }
         } catch (NumberFormatException e) {
             p.sendMessage(Prefix.PREFIX_FAILURE + "Index must be number");
-            return true;
-        }
-        if(index<=0) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Index must be < 0 ");
             return true;
         }
 
@@ -51,12 +52,12 @@ public class LoreLineCommand implements CommandExecutor {
         if(lore == null) lore = new ArrayList<String>();
 
         int diff = index-lore.size();
-        for(int i = 0; i<=diff; i++) lore.add(""); // loop
+        for (int i = 0; i<diff; i++) lore.add(""); // Loop to add lines up to index
 
-        StringBuilder text = new StringBuilder();
-        for(int i = 1; i<args.length; i++) text.append(args[i]).append(" "); // loop
+        String text = "";
+        for (int i = 0; i < args.length; i++) text += args[i] + (i==args.length-1 ? "" : " "); // so look i dont even know
 
-        lore.set(index-1, ColorConvert.translateColorCodes(text.toString()));
+        lore.set(index-1, ColorConvert.translateColorCodes(text)); // Setting lore
         m.setLore(lore);
         item.setItemMeta(m);
 

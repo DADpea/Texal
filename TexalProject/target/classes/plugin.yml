@@ -23,4 +23,10 @@ commands:
   sll:
     description: Edits lore lines
     usage: /sll <index> <string>
+  rll:
+    description: Remove lore line
+    usage: /rll <index>
+  rename:
+    description: Renames item
+    usage: /rename <string>
 

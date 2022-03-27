@@ -1,8 +1,10 @@
 package io.github.dadpea.texal;
 
 import io.github.dadpea.texal.commands.*;
+import io.github.dadpea.texal.commands.itemManipulation.LoreLineCommand;
+import io.github.dadpea.texal.commands.itemManipulation.RemoveLoreLine;
+import io.github.dadpea.texal.commands.itemManipulation.RenameCommand;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +18,7 @@ public class Texal extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        spawnPoint =  new Location(Bukkit.getWorld("world"), 0.5, 1, 0.5);
+        spawnPoint =  new Location(Bukkit.getWorld("world"), 0.5, 2, 0.5);
 
         this.getCommand("fs").setExecutor(new FlightspeedCommand());
         this.getCommand("flightspeed").setExecutor(new FlightspeedCommand());
@@ -29,6 +31,8 @@ public class Texal extends JavaPlugin implements Listener {
         this.getCommand("newplot").setExecutor(new NewPlotCommand()); // temp
 
         this.getCommand("sll").setExecutor(new LoreLineCommand());
+        this.getCommand("rll").setExecutor(new RemoveLoreLine());
+        this.getCommand("rename").setExecutor(new RenameCommand());
 
         this.getServer().getPluginManager().registerEvents(this, this);
     }
