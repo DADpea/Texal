@@ -5,7 +5,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static io.github.dadpea.texal.commands.Prefix.*;
+import static io.github.dadpea.texal.style.Prefix.*;
 
 public class PrefixTestCommand implements CommandExecutor {
     @Override

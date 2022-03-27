@@ -1,5 +1,6 @@
 package io.github.dadpea.texal.commands;
 
+import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -1,10 +1,6 @@
-package io.github.dadpea.texal;
+package io.github.dadpea.texal.style;
 
-import org.bukkit.ChatColor;
 import static org.bukkit.ChatColor.COLOR_CHAR;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ColorConvert {
     public static String fromHex(String s) {

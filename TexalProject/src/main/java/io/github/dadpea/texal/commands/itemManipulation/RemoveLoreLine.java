@@ -1,6 +1,6 @@
 package io.github.dadpea.texal.commands.itemManipulation;
 
-import io.github.dadpea.texal.commands.Prefix;
+import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
