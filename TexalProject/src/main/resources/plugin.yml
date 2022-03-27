@@ -17,3 +17,6 @@ commands:
   unloadWorld:
     description: Unload World
     usage: /unloadWorld
+  newplot:
+    description: Makes a new plot, temporary
+    usage: /newplot <SMALL,MEDIUM,LARGE>
