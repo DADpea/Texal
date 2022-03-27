@@ -39,9 +39,9 @@ public class PlotChunkGenerator extends ChunkGenerator {
             chunkData.setRegion(0, -3, 0, 16, 0, 16, Material.DIRT);
             chunkData.setRegion(0, -4, 0, 16, -3, 16, Material.BEDROCK);
             if (x==0) chunkData.setRegion(0, 0, 0, 1, 1, 16, plotSize.borderMat);
-            if (x==plotSize.size-1) chunkData.setRegion(15, 0, 1, 16, 1, 16, plotSize.borderMat);
+            if (x==plotSize.size-1) chunkData.setRegion(15, 0, 0, 16, 1, 16, plotSize.borderMat);
             if (z==0) chunkData.setRegion(0, 0, 0, 16, 1, 1, plotSize.borderMat);
-            if (z==plotSize.size-1) chunkData.setRegion(15, 0, 1, 16, 1, 16, plotSize.borderMat);
+            if (z==plotSize.size-1) chunkData.setRegion(0, 0, 15, 16, 1, 16, plotSize.borderMat);
          }
     }
 }
