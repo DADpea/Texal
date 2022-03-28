@@ -39,6 +39,10 @@ public class Plot {
     public static Plot getPlot(int id) throws NoSuchPlotException {
         if (loadedPlots.containsKey(id)) {
             return loadedPlots.get(id);
+        } else if (Bukkit.getWorld(plotPrefix + id) != null) {
+            Plot p = new Plot(id);
+            loadedPlots.put(id, p);
+            return p;
         } else {
             throw new NoSuchPlotException();
         }
@@ -65,6 +69,11 @@ public class Plot {
         this.world.setTime(6000L);
         this.world.setKeepSpawnInMemory(false);
         this.plotData = new PlotPersistent(id, s, owner);
+    }
+
+    // TODO load plotData from the world.
+    private Plot(int id) {
+
     }
 
     public void joinWorld(Player p) {
