@@ -25,7 +25,7 @@ public class NewPlotCommand implements CommandExecutor {
         if (args[0].equals("LARGE")) plotsize = PlotSize.LARGE;
         Plot plot = new Plot(plotsize);
         plot.joinWorld(p);
-        p.sendMessage(Prefix.PREFIX_SUCCESS + "Joined plot: " + plot.getID() + ".");
+        p.sendMessage(Prefix.PREFIX_SUCCESS + "Joined plot: " + plot.getId() + ".");
         return true;
     }
 }

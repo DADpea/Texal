@@ -1,31 +1,55 @@
 package io.github.dadpea.texal.plots;
 
+import io.github.dadpea.texal.plots.exceptions.NoSuchPlotException;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.generator.WorldInfo;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Queue;
+import java.util.Stack;
 
-// Represents a plot that the owner/devs can work on.
-// Represents a world.
 public class Plot {
     final static String plotPrefix = "plots/plot";
-    static int nextID = 0; // Make sure to load this up!
-    World world;
-    PlotSize plotSize;
-    Location spawnLoc;
-    int id;
+    static int nextID = 0; // The next ID that needs to be created // Make sure to load this up!
+    static Queue<Integer> openIDs; // Any unclaimed plot IDs that are now open
+    private static HashMap<Integer, Plot> loadedPlots = new HashMap<Integer, Plot>();
 
-    public Plot(PlotSize s) {
-        this(++nextID,s);
+    private void loadPlot() {
+        loadedPlots.put(this.getId(), this);
+    }
+    private void createPlot() {
+
+    }
+    private void unloadPlot() {
+        loadedPlots.remove(this.getId());
     }
 
-    public Plot(int id, PlotSize s) {
-        this.plotSize = s;
-        this.id = id;
+    public static Plot createNewPlot(PlotSize size, Player owner) {
+        int plotID;
+        if (openIDs.size()>0) {
+            plotID = openIDs.remove();
+        } else {
+            plotID = nextID;
+            nextID++;
+        }
+        return new Plot(plotID, size, owner);
+    }
+
+    public static Plot getPlot(int id) throws NoSuchPlotException {
+        if (loadedPlots.containsKey(id)) {
+            return loadedPlots.get(id);
+        } else {
+            throw new NoSuchPlotException();
+        }
+    }
+
+    World world;
+    PlotPersistent plotData;
+
+    private Plot(int id, PlotSize s, Player owner) {
         WorldCreator wc = new WorldCreator(plotPrefix + id);
-        wc.generator(new PlotChunkGenerator(plotSize));
+        wc.generator(new PlotChunkGenerator(s));
         this.world = Bukkit.createWorld(wc);
         this.world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
         this.world.setGameRule(GameRule.DO_TRADER_SPAWNING, false);
@@ -40,14 +64,18 @@ public class Plot {
         this.world.setGameRule(GameRule.SPECTATORS_GENERATE_CHUNKS, false);
         this.world.setTime(6000L);
         this.world.setKeepSpawnInMemory(false);
-        this.spawnLoc = new Location(world, 0, 1, 0);
+        this.plotData = new PlotPersistent(id, s, owner);
     }
 
     public void joinWorld(Player p) {
-        p.teleport(spawnLoc);
+        p.teleport(new Location(world, this.plotData.getSpawnX(), this.plotData.getSpawnY(), this.plotData.getSpawnZ()));
     }
 
-    public int getID() {
-        return this.id;
+    public int getId() {
+        return this.plotData.getId();
+    }
+
+    public PlotSize getPlotSize() {
+        return this.plotData.getPlotSize();
     }
 }

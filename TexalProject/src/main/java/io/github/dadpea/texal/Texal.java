@@ -7,6 +7,7 @@ import io.github.dadpea.texal.commands.itemManipulation.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -35,7 +36,9 @@ public final class Texal extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.kickPlayer("The server is restarting!");
+        }
     }
 
     private void registerCommands() {
