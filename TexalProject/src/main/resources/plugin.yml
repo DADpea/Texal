@@ -20,6 +20,9 @@ commands:
   newplot:
     description: Makes a new plot, temporary
     usage: /newplot <SMALL,MEDIUM,LARGE>
+  loadplot:
+    description: Loads a plot id, temporary
+    usage: /loadplot <id>
   sll:
     description: Edits lore lines
     usage: /sll <index> <string>

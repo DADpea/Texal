@@ -1,6 +1,7 @@
 package io.github.dadpea.texal.plots;
 
 import com.google.gson.Gson;
+import io.github.dadpea.texal.Texal;
 import io.github.dadpea.texal.plots.exceptions.MalformedDataException;
 import io.github.dadpea.texal.plots.exceptions.NoSuchPlotException;
 import org.bukkit.*;
@@ -10,7 +11,13 @@ import java.io.*;
 
 public class Plot {
     final static String plotPrefix = "plots/plot";
-    static int nextID = 0; // The next ID that needs to be created // Make sure to load this up!
+
+    private static int getNextID() {
+        return Texal.persistentData.getPlotPersistent().getNextID();
+    }
+    private static void setNextID(int i) {
+        Texal.persistentData.getPlotPersistent().setNextID(i);
+    }
 
     private void loadWorld() {
         if (!isLoaded) {
@@ -26,8 +33,8 @@ public class Plot {
     }
 
     public static Plot createNewPlot(PlotSize size, Player owner) {
-        nextID++;
-        return new Plot(nextID, size, owner);
+        setNextID(getNextID() + 1);
+        return new Plot(getNextID(), size, owner);
     }
 
     World world;

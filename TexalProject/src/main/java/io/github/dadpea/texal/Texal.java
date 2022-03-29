@@ -1,6 +1,10 @@
 package io.github.dadpea.texal;
 
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonWriter;
 import io.github.dadpea.texal.events.*;
+import io.github.dadpea.texal.plots.PlotPersistent;
+import io.github.dadpea.texal.plots.exceptions.MalformedDataException;
 import io.github.dadpea.texal.style.GlobalColors;
 import io.github.dadpea.texal.commands.*;
 import io.github.dadpea.texal.commands.itemManipulation.*;
@@ -13,11 +17,14 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
+import java.io.*;
+
 public final class Texal extends JavaPlugin {
     public static Texal plugin;
     public static Location spawnPoint;
     public static Scoreboard spawnBoard;
     public static String scoreboardTitle = GlobalColors.TEAL + "" + ChatColor.BOLD + ">" + GlobalColors.GREEN + "" + ChatColor.BOLD + "  TEXAL  " + GlobalColors.TEAL + ChatColor.BOLD + "<";
+    public static ServerPersistent persistentData;
 
     @Override
     public void onEnable() {
@@ -32,12 +39,14 @@ public final class Texal extends JavaPlugin {
 
         registerCommands();
         registerEvents();
+        loadPersistent();
     }
 
     @Override
     public void onDisable() {
+        savePersistent();
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.kickPlayer("The server is restarting!");
+            p.kickPlayer(GlobalColors.RED + "The server is restarting!");
         }
     }
 
@@ -51,6 +60,7 @@ public final class Texal extends JavaPlugin {
         this.getCommand("unloadworld").setExecutor(new UnloadWorldCommand()); // temp
 
         this.getCommand("newplot").setExecutor(new NewPlotCommand()); // temp
+        this.getCommand("joinplot").setExecutor(new JoinPlotCommand()); // temp
 
         this.getCommand("sll").setExecutor(new LoreLineCommand());
         this.getCommand("rll").setExecutor(new RemoveLoreLine());
@@ -60,5 +70,23 @@ public final class Texal extends JavaPlugin {
     private void registerEvents() {
         this.getServer().getPluginManager().registerEvents(new JoinEvent(), this);
         this.getServer().getPluginManager().registerEvents(new QuitEvent(), this);
+    }
+
+    private void loadPersistent() {
+        try (Reader r = new FileReader("serverData.json")) {
+            Gson g = new Gson();
+            persistentData = g.fromJson(r, ServerPersistent.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void savePersistent() {
+        try (Writer r = new FileWriter("serverData.json")) {
+            Gson g = new Gson();
+            g.toJson(persistentData, ServerPersistent.class, r);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
