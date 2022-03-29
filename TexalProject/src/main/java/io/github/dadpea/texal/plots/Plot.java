@@ -1,6 +1,7 @@
 package io.github.dadpea.texal.plots;
 
 import com.google.gson.Gson;
+import io.github.dadpea.texal.ServerPersistent;
 import io.github.dadpea.texal.Texal;
 import io.github.dadpea.texal.plots.exceptions.MalformedDataException;
 import io.github.dadpea.texal.plots.exceptions.NoSuchPlotException;
@@ -84,6 +85,14 @@ public class Plot {
         this.world.setTime(6000L);
         this.world.setKeepSpawnInMemory(false);
         this.plotData = new PlotPersistent(id, s, owner);
+        try (Writer r = new FileWriter(plotPrefix + id + "/plotData.json")) {
+            Gson g = new Gson();
+            if (plotData!=null) {
+                g.toJson(plotData, PlotPersistent.class, r);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void joinPlot(Player p) {
