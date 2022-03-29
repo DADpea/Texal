@@ -23,7 +23,7 @@ public class JoinEvent implements Listener {
         }
         p.teleport(Texal.spawnPoint);
         p.setFlySpeed(0.1f);
-        p.setWalkSpeed(0.1f);
+        p.setWalkSpeed(0.2f);
         p.setExp(0f);
         p.setLevel(0);
         p.setHealth(20);
@@ -32,21 +32,21 @@ public class JoinEvent implements Listener {
         p.setScoreboard(Texal.spawnBoard);
         p.getInventory().clear();
 
-        p.getInventory().setItem(3,
+        p.getInventory().setItem(2,
                 new ItemFactory(Material.IRON_INGOT)
                         .setName(WHITE + "Public Plots")
                         .setLore(LIGHT_GRAY + "Right click to view public plots you can play!")
                         .setTag("texal_default", "spawn_public_plots")
                         .create()
         );
-        p.getInventory().setItem(5,
+        p.getInventory().setItem(4,
                 new ItemFactory(Material.GOLD_INGOT)
                         .setName(WHITE + "My Plots")
                         .setLore(LIGHT_GRAY + "Right click to view your plots or access tutorials!")
                         .setTag("texal_default", "spawn_my_plots")
                         .create()
         );
-        p.getInventory().setItem(7,
+        p.getInventory().setItem(6,
                 new ItemFactory(Material.NETHERITE_INGOT)
                         .setName(WHITE + "Settings")
                         .setLore(LIGHT_GRAY + "Right click to view or edit your settings!")

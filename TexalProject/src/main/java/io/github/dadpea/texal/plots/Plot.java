@@ -1,57 +1,65 @@
 package io.github.dadpea.texal.plots;
 
+import com.google.gson.Gson;
+import io.github.dadpea.texal.plots.exceptions.MalformedDataException;
 import io.github.dadpea.texal.plots.exceptions.NoSuchPlotException;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Queue;
-import java.util.Stack;
+import java.io.*;
 
 public class Plot {
     final static String plotPrefix = "plots/plot";
     static int nextID = 0; // The next ID that needs to be created // Make sure to load this up!
-    static Queue<Integer> openIDs; // Any unclaimed plot IDs that are now open
-    private static HashMap<Integer, Plot> loadedPlots = new HashMap<Integer, Plot>();
 
-    private void loadPlot() {
-        loadedPlots.put(this.getId(), this);
+    private void loadWorld() {
+        if (!isLoaded) {
+            isLoaded = true;
+            Bukkit.createWorld(new WorldCreator(plotPrefix + id));
+        }
     }
-    private void createPlot() {
-
-    }
-    private void unloadPlot() {
-        loadedPlots.remove(this.getId());
+    private void unloadWorld() {
+        if (isLoaded) {
+            isLoaded = false;
+            Bukkit.unloadWorld(world, true);
+        }
     }
 
     public static Plot createNewPlot(PlotSize size, Player owner) {
-        int plotID;
-        if (openIDs.size()>0) {
-            plotID = openIDs.remove();
-        } else {
-            plotID = nextID;
-            nextID++;
-        }
-        return new Plot(plotID, size, owner);
-    }
-
-    public static Plot getPlot(int id) throws NoSuchPlotException {
-        if (loadedPlots.containsKey(id)) {
-            return loadedPlots.get(id);
-        } else if (Bukkit.getWorld(plotPrefix + id) != null) {
-            Plot p = new Plot(id);
-            loadedPlots.put(id, p);
-            return p;
-        } else {
-            throw new NoSuchPlotException();
-        }
+        nextID++;
+        return new Plot(nextID, size, owner);
     }
 
     World world;
     PlotPersistent plotData;
+    boolean isLoaded;
+    int id;
+
+
+    /**
+     * Loads a pre-existing plot from an input ID.
+     * Will not create a new plot.
+     *
+     * @param id
+     * @throws NoSuchPlotException
+     * @throws MalformedDataException
+     */
+    public Plot(int id) throws NoSuchPlotException, MalformedDataException {
+        this.id = id;
+        this.isLoaded = false;
+        this.world = Bukkit.getWorld(plotPrefix + id);
+        if (this.world == null) throw new NoSuchPlotException();
+        try (Reader r = new FileReader(plotPrefix + id + "/plotData.json")) {
+            Gson g = new Gson();
+            this.plotData = g.fromJson(r, PlotPersistent.class);
+        } catch (Exception e) {
+            throw new MalformedDataException();
+        }
+    }
 
     private Plot(int id, PlotSize s, Player owner) {
+        this.id = id;
+        this.isLoaded = true;
         WorldCreator wc = new WorldCreator(plotPrefix + id);
         wc.generator(new PlotChunkGenerator(s));
         this.world = Bukkit.createWorld(wc);
@@ -71,20 +79,12 @@ public class Plot {
         this.plotData = new PlotPersistent(id, s, owner);
     }
 
-    // TODO load plotData from the world.
-    private Plot(int id) {
-
-    }
-
-    public void joinWorld(Player p) {
+    public void joinPlot(Player p) {
+        loadWorld();
         p.teleport(new Location(world, this.plotData.getSpawnX(), this.plotData.getSpawnY(), this.plotData.getSpawnZ()));
     }
 
     public int getId() {
-        return this.plotData.getId();
-    }
-
-    public PlotSize getPlotSize() {
-        return this.plotData.getPlotSize();
+        return this.id;
     }
 }
