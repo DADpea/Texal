@@ -77,6 +77,7 @@ public final class Texal extends JavaPlugin {
             Gson g = new Gson();
             persistentData = g.fromJson(r, ServerPersistent.class);
         } catch (Exception e) {
+            persistentData = new ServerPersistent();
             e.printStackTrace();
         }
     }
@@ -84,7 +85,9 @@ public final class Texal extends JavaPlugin {
     private void savePersistent() {
         try (Writer r = new FileWriter("serverData.json")) {
             Gson g = new Gson();
-            g.toJson(persistentData, ServerPersistent.class, r);
+            if (persistentData!=null) {
+                g.toJson(persistentData, ServerPersistent.class, r);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
