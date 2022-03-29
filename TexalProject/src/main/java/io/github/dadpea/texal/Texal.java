@@ -44,10 +44,10 @@ public final class Texal extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        savePersistent();
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.kickPlayer(GlobalColors.RED + "The server is restarting!");
         }
+        savePersistent();
     }
 
     private void registerCommands() {
