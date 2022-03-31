@@ -1,5 +1,7 @@
 package io.github.dadpea.texal.commands;
 
+import io.github.dadpea.texal.Texal;
+import io.github.dadpea.texal.player.state.EditPlotState;
 import io.github.dadpea.texal.style.Prefix;
 import io.github.dadpea.texal.plots.Plot;
 import io.github.dadpea.texal.plots.PlotSize;
@@ -24,7 +26,7 @@ public class NewPlotCommand implements CommandExecutor {
         if (args[0].equals("MEDIUM")) plotsize = PlotSize.MEDIUM;
         if (args[0].equals("LARGE")) plotsize = PlotSize.LARGE;
         Plot plot = Plot.createNewPlot(plotsize, p);
-        plot.joinPlot(p);
+        Texal.setPlayerState(p, new EditPlotState(plot));
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Joined plot: " + plot.getId() + ".");
         return true;
     }

@@ -68,6 +68,7 @@ public final class Texal extends JavaPlugin {
 
         this.getCommand("newplot").setExecutor(new NewPlotCommand()); // temp
         this.getCommand("joinplot").setExecutor(new JoinPlotCommand()); // temp
+        this.getCommand("spawn").setExecutor(new LeaveCommand()); // temp
 
         this.getCommand("sll").setExecutor(new LoreLineCommand());
         this.getCommand("rll").setExecutor(new RemoveLoreLine());
@@ -115,6 +116,10 @@ public final class Texal extends JavaPlugin {
 
         playerStates.put(p.getUniqueId(), s);
         s.onEnter(p);
+    }
+
+    public static PlayerState getPlayerState(Player p) {
+        return playerStates.get(p.getUniqueId());
     }
 
     public static void removePlayerState(Player p) {

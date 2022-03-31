@@ -32,4 +32,8 @@ commands:
   rename:
     description: Renames item
     usage: /rename <string>
+  spawn:
+    description: Leaves the plot you're on.
+    usage: /spawn
+    aliases: [s, leave]
 

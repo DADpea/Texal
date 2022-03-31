@@ -1,6 +1,7 @@
 package io.github.dadpea.texal.commands;
 
 import io.github.dadpea.texal.Texal;
+import io.github.dadpea.texal.player.state.EditPlotState;
 import io.github.dadpea.texal.plots.Plot;
 import io.github.dadpea.texal.plots.PlotSize;
 import io.github.dadpea.texal.plots.exceptions.MalformedDataException;
@@ -30,6 +31,7 @@ public class JoinPlotCommand implements CommandExecutor {
             p.sendMessage(Prefix.PREFIX_FAILURE + "Input is not a number.");
             return true;
         }
+
         Plot plot;
         try {
             plot = new Plot(id);
@@ -42,7 +44,7 @@ public class JoinPlotCommand implements CommandExecutor {
             return true;
         }
 
-        plot.joinPlot(p);
+        Texal.setPlayerState(p, new EditPlotState(plot));
         return true;
     }
 }
