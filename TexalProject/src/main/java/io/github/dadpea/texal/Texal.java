@@ -28,7 +28,7 @@ public final class Texal extends JavaPlugin {
     public static Scoreboard spawnBoard;
     public static String scoreboardTitle = GlobalColors.TEAL + "" + ChatColor.BOLD + ">" + GlobalColors.GREEN + "" + ChatColor.BOLD + "  TEXAL  " + GlobalColors.TEAL + ChatColor.BOLD + "<";
     public static ServerPersistent persistentData;
-    public static HashMap<UUID, PlayerState> playerStates;
+    public static HashMap<UUID, PlayerState> playerStates = new HashMap<>();
 
     @Override
     public void onEnable() {
