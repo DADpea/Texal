@@ -36,4 +36,3 @@ commands:
     description: Leaves the plot you're on.
     usage: /spawn
     aliases: [s, leave]
-

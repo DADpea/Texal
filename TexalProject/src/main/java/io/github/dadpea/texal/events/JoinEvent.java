@@ -1,18 +1,13 @@
 package io.github.dadpea.texal.events;
 
 import io.github.dadpea.texal.Texal;
-import io.github.dadpea.texal.item.ItemFactory;
 import io.github.dadpea.texal.player.state.LobbyState;
-import io.github.dadpea.texal.style.GlobalColors;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import static io.github.dadpea.texal.style.GlobalColors.*;
 
 public class JoinEvent implements Listener {
     @EventHandler
