@@ -3,6 +3,7 @@ package io.github.dadpea.texal;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonWriter;
 import io.github.dadpea.texal.events.*;
+import io.github.dadpea.texal.player.state.PlayerState;
 import io.github.dadpea.texal.plots.PlotPersistent;
 import io.github.dadpea.texal.plots.exceptions.MalformedDataException;
 import io.github.dadpea.texal.style.GlobalColors;
@@ -18,6 +19,8 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.UUID;
 
 public final class Texal extends JavaPlugin {
     public static Texal plugin;
@@ -25,10 +28,11 @@ public final class Texal extends JavaPlugin {
     public static Scoreboard spawnBoard;
     public static String scoreboardTitle = GlobalColors.TEAL + "" + ChatColor.BOLD + ">" + GlobalColors.GREEN + "" + ChatColor.BOLD + "  TEXAL  " + GlobalColors.TEAL + ChatColor.BOLD + "<";
     public static ServerPersistent persistentData;
+    public static HashMap<UUID, PlayerState> playerStates;
 
     @Override
     public void onEnable() {
-        this.plugin = this;
+        plugin = this;
         spawnPoint =  new Location(Bukkit.getWorld("world"), 0.5, 2, 0.5);
         spawnBoard = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective obj = spawnBoard.registerNewObjective("spawnBoard", "dummy", scoreboardTitle);
@@ -40,6 +44,8 @@ public final class Texal extends JavaPlugin {
         registerCommands();
         registerEvents();
         loadPersistent();
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this::tick, 0, 1);
     }
 
     @Override
@@ -50,6 +56,7 @@ public final class Texal extends JavaPlugin {
         savePersistent();
     }
 
+    @SuppressWarnings("all")
     private void registerCommands() {
         this.getCommand("fs").setExecutor(new FlightspeedCommand());
         this.getCommand("flightspeed").setExecutor(new FlightspeedCommand());
@@ -91,5 +98,27 @@ public final class Texal extends JavaPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void tick() {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            PlayerState s = playerStates.get(p.getUniqueId());
+            if (s != null) {
+                s.onTick(p);
+            }
+        }
+    }
+
+    public static void setPlayerState(Player p, PlayerState s) {
+        PlayerState old = playerStates.get(p);
+        if (old!=null) old.onExit(p);
+
+        playerStates.put(p.getUniqueId(), s);
+        s.onEnter(p);
+    }
+
+    public static void removePlayerState(Player p) {
+        playerStates.get(p.getUniqueId()).onExit(p);
+        playerStates.remove(p.getUniqueId());
     }
 }

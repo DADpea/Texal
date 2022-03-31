@@ -1,5 +1,6 @@
 package io.github.dadpea.texal.events;
 
+import io.github.dadpea.texal.Texal;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -10,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class QuitEvent implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
+        Texal.removePlayerState(e.getPlayer());
         e.setQuitMessage("");
         Player p = e.getPlayer();
         for (Player p1 : Bukkit.getOnlinePlayers()) {
