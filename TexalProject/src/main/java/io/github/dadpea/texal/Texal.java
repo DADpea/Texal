@@ -13,6 +13,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -22,7 +27,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.UUID;
 
-public final class Texal extends JavaPlugin {
+public final class Texal extends JavaPlugin implements Listener {
     public static Texal plugin;
     public static Location spawnPoint;
     public static Scoreboard spawnBoard;
@@ -76,6 +81,7 @@ public final class Texal extends JavaPlugin {
     }
 
     private void registerEvents() {
+        this.getServer().getPluginManager().registerEvents(this, this);
         this.getServer().getPluginManager().registerEvents(new JoinEvent(), this);
         this.getServer().getPluginManager().registerEvents(new QuitEvent(), this);
     }
@@ -111,7 +117,7 @@ public final class Texal extends JavaPlugin {
     }
 
     public static void setPlayerState(Player p, PlayerState s) {
-        PlayerState old = playerStates.get(p);
+        PlayerState old = getPlayerState(p);
         if (old!=null) old.onExit(p);
 
         playerStates.put(p.getUniqueId(), s);
@@ -125,5 +131,27 @@ public final class Texal extends JavaPlugin {
     public static void removePlayerState(Player p) {
         playerStates.get(p.getUniqueId()).onExit(p);
         playerStates.remove(p.getUniqueId());
+    }
+
+    @EventHandler
+    public void onClick(PlayerInteractEvent e) { getPlayerState(e.getPlayer()).onClick(e); }
+    @EventHandler
+    public void onSwapHands(PlayerSwapHandItemsEvent e) { getPlayerState(e.getPlayer()).onSwapHands(e); }
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent e) { getPlayerState(e.getPlayer()).onRespawn(e); }
+    @EventHandler
+    public void onDropItem(PlayerDropItemEvent e) { getPlayerState(e.getPlayer()).onDropItem(e); }
+    @EventHandler
+    public void onSwapSlots(PlayerChangedMainHandEvent e) { getPlayerState(e.getPlayer()).onSwapSlots(e); }
+    @EventHandler
+    public void onSneak(PlayerToggleSneakEvent e) { getPlayerState(e.getPlayer()).onSneak(e); }
+    @EventHandler
+    public void onSprint(PlayerToggleSprintEvent e) { getPlayerState(e.getPlayer()).onSprint(e); }
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) { getPlayerState(e.getEntity()).onDeath(e); }
+    @EventHandler
+    public void onDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player)
+            getPlayerState((Player) e.getEntity()).onDamage(e);
     }
 }

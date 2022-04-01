@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import static io.github.dadpea.texal.style.GlobalColors.LIGHT_GRAY;
 import static io.github.dadpea.texal.style.GlobalColors.WHITE;
 
-public class LobbyState implements PlayerState {
+public class LobbyState extends PlayerState {
 
     public LobbyState() {
 

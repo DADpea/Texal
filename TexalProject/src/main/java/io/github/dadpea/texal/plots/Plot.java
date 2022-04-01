@@ -48,15 +48,24 @@ public class Plot {
      * Loads a pre-existing plot from an input ID.
      * Will not create a new plot.
      *
-     * @param id
-     * @throws NoSuchPlotException
-     * @throws MalformedDataException
+     * @param id The id of the plot.
+     * @throws NoSuchPlotException Throws exception if plot doesn't exist.
+     * @throws MalformedDataException Throws exception if data is corrupt.
      */
     public Plot(int id) throws NoSuchPlotException, MalformedDataException {
+        // Set whatevs
         this.id = id;
         this.isLoaded = false;
+
+        // Set world
         this.world = Bukkit.getWorld(plotPrefix + id);
-        if (this.world == null) throw new NoSuchPlotException();
+        if (this.world == null) {
+            File f = new File(plotPrefix + id);
+            if (!f.exists()) throw new NoSuchPlotException();
+            this.world = Bukkit.createWorld(new WorldCreator(plotPrefix + id)); // bad, update later
+        }
+
+        // Set data
         try (Reader r = new FileReader(plotPrefix + id + "/plotData.json")) {
             Gson g = new Gson();
             this.plotData = g.fromJson(r, PlotPersistent.class);

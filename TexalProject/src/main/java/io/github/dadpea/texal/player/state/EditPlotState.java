@@ -3,7 +3,7 @@ package io.github.dadpea.texal.player.state;
 import io.github.dadpea.texal.plots.Plot;
 import org.bukkit.entity.Player;
 
-public class EditPlotState implements PlayerState {
+public class EditPlotState extends PlayerState {
     int id;
     Plot plot;
 
