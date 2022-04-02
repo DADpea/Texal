@@ -73,4 +73,9 @@ public class ServerBuildState implements PlayerState{
     public void onBlockBreak(BlockBreakEvent e) {
 
     }
+
+    @Override
+    public void onChat(AsyncPlayerChatEvent e) {
+
+    }
 }

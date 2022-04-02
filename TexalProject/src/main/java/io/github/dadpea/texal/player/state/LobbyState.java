@@ -85,6 +85,11 @@ public class LobbyState implements PlayerState {
     }
 
     @Override
+    public void onChat(AsyncPlayerChatEvent e) {
+
+    }
+
+    @Override
     public void onDropItem(PlayerDropItemEvent e) {
         e.setCancelled(true);
     }
