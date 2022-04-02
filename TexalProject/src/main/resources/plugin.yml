@@ -36,3 +36,6 @@ commands:
     description: Leaves the plot you're on.
     usage: /spawn
     aliases: [s, leave]
+  svbuild:
+    description: dont use simple brain
+    usage: /svbuild

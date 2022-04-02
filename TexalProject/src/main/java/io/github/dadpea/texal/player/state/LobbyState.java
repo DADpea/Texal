@@ -2,9 +2,15 @@ package io.github.dadpea.texal.player.state;
 
 import io.github.dadpea.texal.Texal;
 import io.github.dadpea.texal.item.ItemFactory;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import static io.github.dadpea.texal.style.GlobalColors.LIGHT_GRAY;
 import static io.github.dadpea.texal.style.GlobalColors.WHITE;
@@ -24,7 +30,7 @@ public class LobbyState extends PlayerState {
         p.setLevel(0);
         p.setHealth(20);
         p.setFlying(false);
-        p.setGameMode(GameMode.ADVENTURE);
+        p.setGameMode(GameMode.SURVIVAL);
         p.setScoreboard(Texal.spawnBoard);
         p.getInventory().clear();
 
@@ -60,6 +66,31 @@ public class LobbyState extends PlayerState {
 
     @Override
     public void onTick(Player p) {
+        p.setFoodLevel(20);
+        p.setSaturation(20f);
+    }
 
+    @Override
+    public void onDamage(EntityDamageEvent e) {
+        e.setCancelled(true);
+    }
+
+    @Override
+    public void onRespawn(PlayerRespawnEvent e) {
+        e.getPlayer().teleport(Texal.spawnPoint);
+    }
+
+    @Override
+    public void onBlockBreak(BlockBreakEvent e) {
+        e.setCancelled(true);
+    }
+
+    @Override
+    public void onDropItem(PlayerDropItemEvent e) {
+        e.setCancelled(true);
+    }
+    @Override
+    public void onInteract(PlayerInteractEvent e) {
+        e.setCancelled(true);
     }
 }

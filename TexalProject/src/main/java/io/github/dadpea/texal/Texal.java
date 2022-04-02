@@ -15,6 +15,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
@@ -35,7 +36,7 @@ public final class Texal extends JavaPlugin implements Listener {
     public static ServerPersistent persistentData;
     public static HashMap<UUID, PlayerState> playerStates = new HashMap<>();
 
-    @Override
+     @Override
     public void onEnable() {
         plugin = this;
         spawnPoint =  new Location(Bukkit.getWorld("world"), 0.5, 2, 0.5);
@@ -74,6 +75,7 @@ public final class Texal extends JavaPlugin implements Listener {
         this.getCommand("newplot").setExecutor(new NewPlotCommand()); // temp
         this.getCommand("joinplot").setExecutor(new JoinPlotCommand()); // temp
         this.getCommand("spawn").setExecutor(new LeaveCommand()); // temp
+        this.getCommand("svbuild").setExecutor(new ServerBuildCommand());
 
         this.getCommand("sll").setExecutor(new LoreLineCommand());
         this.getCommand("rll").setExecutor(new RemoveLoreLine());
@@ -134,7 +136,7 @@ public final class Texal extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onClick(PlayerInteractEvent e) { getPlayerState(e.getPlayer()).onClick(e); }
+    public void onClick(PlayerInteractEvent e) { getPlayerState(e.getPlayer()).onInteract(e); }
     @EventHandler
     public void onSwapHands(PlayerSwapHandItemsEvent e) { getPlayerState(e.getPlayer()).onSwapHands(e); }
     @EventHandler
@@ -154,4 +156,6 @@ public final class Texal extends JavaPlugin implements Listener {
         if (e.getEntity() instanceof Player)
             getPlayerState((Player) e.getEntity()).onDamage(e);
     }
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) { getPlayerState(e.getPlayer()).onBlockBreak(e); }
 }

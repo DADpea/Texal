@@ -91,6 +91,7 @@ public class Plot {
         this.world.setGameRule(GameRule.DO_INSOMNIA, false);
         this.world.setGameRule(GameRule.MOB_GRIEFING, false);
         this.world.setGameRule(GameRule.SPECTATORS_GENERATE_CHUNKS, false);
+        this.world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
         this.world.setTime(6000L);
         this.world.setKeepSpawnInMemory(false);
         this.plotData = new PlotPersistent(id, s, owner);
