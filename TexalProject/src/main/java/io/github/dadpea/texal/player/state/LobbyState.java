@@ -86,7 +86,13 @@ public class LobbyState implements PlayerState {
 
     @Override
     public void onChat(AsyncPlayerChatEvent e) {
-
+        e.setCancelled(true);
+        for (Player p: Bukkit.getOnlinePlayers()) {
+            PlayerState ps = Texal.getPlayerState(p);
+            if(ps instanceof LobbyState || ps instanceof ServerBuildState) {
+                p.sendMessage(e.getPlayer().getDisplayName() + ": " + e.getMessage());
+            }
+        }
     }
 
     @Override
@@ -121,6 +127,8 @@ public class LobbyState implements PlayerState {
 
     @Override
     public void onSwapHands(PlayerSwapHandItemsEvent e) {
-
+        e.setCancelled(true);
     }
+
+
 }

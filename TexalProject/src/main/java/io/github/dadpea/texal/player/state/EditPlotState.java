@@ -26,7 +26,6 @@ public class EditPlotState implements PlayerState {
         p.getInventory().clear();
         p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
         p.setGameMode(GameMode.CREATIVE);
-        p.teleport(Texal.spawnPoint);
         p.setFlySpeed(0.1f);
         p.setWalkSpeed(0.2f);
         p.setExp(0f);
@@ -97,6 +96,15 @@ public class EditPlotState implements PlayerState {
 
     @Override
     public void onChat(AsyncPlayerChatEvent e) {
-
+        e.setCancelled(true);
+        for (Player p: Bukkit.getOnlinePlayers()) {
+            PlayerState ps = Texal.getPlayerState(p);
+            if(ps instanceof EditPlotState) {
+                EditPlotState eps = (EditPlotState) ps;
+                if (eps.id == this.id ) {
+                    p.sendMessage(e.getPlayer().getDisplayName() + ": " + e.getMessage());
+                }
+            }
+        }
     }
 }
