@@ -158,4 +158,8 @@ public final class Texal extends JavaPlugin implements Listener {
     }
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) { getPlayerState(e.getPlayer()).onBlockBreak(e); }
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent e) {
+        getPlayerState(e.getPlayer()).onChat(e);
+    }
 }

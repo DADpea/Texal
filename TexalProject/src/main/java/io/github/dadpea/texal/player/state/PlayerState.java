@@ -8,29 +8,20 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 
-public class PlayerState implements Listener {
-    public void onEnter(Player p) {}
-    public void onExit(Player p) {}
-    public void onTick(Player p) {}
-    @EventHandler
-    public void onInteract(PlayerInteractEvent e) {}
-    @EventHandler
-    public void onSwapHands(PlayerSwapHandItemsEvent e) {}
-    @EventHandler
-    public void onRespawn(PlayerRespawnEvent e) {}
-    @EventHandler
-    public void onDropItem(PlayerDropItemEvent e) {}
-    @EventHandler
-    public void onSwapSlots(PlayerChangedMainHandEvent e) {}
-    @EventHandler
-    public void onSneak(PlayerToggleSneakEvent e) {}
-    @EventHandler
-    public void onSprint(PlayerToggleSprintEvent e) {}
-    @EventHandler
-    public void onDeath(PlayerDeathEvent e) {}
-    @EventHandler
-    public void onDamage(EntityDamageEvent e) {}
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) {}
+public interface PlayerState extends Listener {
+    void onEnter(Player p);
+    void onExit(Player p);
+    void onTick(Player p);
+    void onInteract(PlayerInteractEvent e);
+    void onSwapHands(PlayerSwapHandItemsEvent e);
+    void onRespawn(PlayerRespawnEvent e);
+    void onDropItem(PlayerDropItemEvent e);
+    void onSwapSlots(PlayerChangedMainHandEvent e);
+    void onSneak(PlayerToggleSneakEvent e);
+    void onSprint(PlayerToggleSprintEvent e);
+    void onDeath(PlayerDeathEvent e);
+    void onDamage(EntityDamageEvent e);
+    void onBlockBreak(BlockBreakEvent e);
+    void onChat(AsyncPlayerChatEvent e);
 
 }

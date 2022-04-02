@@ -8,14 +8,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.*;
 
 import static io.github.dadpea.texal.style.GlobalColors.LIGHT_GRAY;
 import static io.github.dadpea.texal.style.GlobalColors.WHITE;
 
-public class LobbyState extends PlayerState {
+public class LobbyState implements PlayerState {
 
     public LobbyState() {
 
@@ -89,8 +88,34 @@ public class LobbyState extends PlayerState {
     public void onDropItem(PlayerDropItemEvent e) {
         e.setCancelled(true);
     }
+
+    @Override
+    public void onSwapSlots(PlayerChangedMainHandEvent e) {
+
+    }
+
+    @Override
+    public void onSneak(PlayerToggleSneakEvent e) {
+
+    }
+
+    @Override
+    public void onSprint(PlayerToggleSprintEvent e) {
+
+    }
+
+    @Override
+    public void onDeath(PlayerDeathEvent e) {
+
+    }
+
     @Override
     public void onInteract(PlayerInteractEvent e) {
         e.setCancelled(true);
+    }
+
+    @Override
+    public void onSwapHands(PlayerSwapHandItemsEvent e) {
+
     }
 }
