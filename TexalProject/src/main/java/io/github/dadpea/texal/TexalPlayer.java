@@ -82,6 +82,7 @@ public final class TexalPlayer {
     protected void saveData() {
         File f = new File(directory + this.getPlayer().getUniqueId() + ".json");
         try (Writer r = new FileWriter(f)) {
+            if (!f.exists()) f.createNewFile();
             Gson g = new Gson();
             g.toJson(new PlayerPersistent(this.ranks), PlayerPersistent.class, r);
         } catch (Exception e) {
