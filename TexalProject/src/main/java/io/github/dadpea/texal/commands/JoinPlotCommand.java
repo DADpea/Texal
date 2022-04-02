@@ -1,6 +1,7 @@
 package io.github.dadpea.texal.commands;
 
 import io.github.dadpea.texal.Texal;
+import io.github.dadpea.texal.TexalPlayer;
 import io.github.dadpea.texal.player.state.EditPlotState;
 import io.github.dadpea.texal.plots.Plot;
 import io.github.dadpea.texal.plots.PlotSize;
@@ -44,7 +45,7 @@ public class JoinPlotCommand implements CommandExecutor {
             return true;
         }
 
-        Texal.setPlayerState(p, new EditPlotState(plot));
+        TexalPlayer.create(p).setState(new EditPlotState(plot));
         return true;
     }
 }

@@ -1,6 +1,7 @@
 package io.github.dadpea.texal.commands;
 
 import io.github.dadpea.texal.Texal;
+import io.github.dadpea.texal.TexalPlayer;
 import io.github.dadpea.texal.player.state.EditPlotState;
 import io.github.dadpea.texal.player.state.LobbyState;
 import io.github.dadpea.texal.plots.Plot;
@@ -20,7 +21,7 @@ public class LeaveCommand implements CommandExecutor {
 
         Player p = (Player) sender;
 
-        Texal.setPlayerState(p, new LobbyState());
+        TexalPlayer.create(p).setState(new LobbyState());
         return true;
     }
 }

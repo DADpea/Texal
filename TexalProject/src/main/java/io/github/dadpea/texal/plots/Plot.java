@@ -41,6 +41,7 @@ public class Plot {
     World world;
     PlotPersistent plotData;
     boolean isLoaded;
+    // nextID is the current max plot ID, NOT max plot ID + 1. (nextID = 5, means plot 5 exists.)
     int id;
 
 

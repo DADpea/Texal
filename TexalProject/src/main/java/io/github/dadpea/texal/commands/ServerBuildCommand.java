@@ -1,6 +1,7 @@
 package io.github.dadpea.texal.commands;
 
 import io.github.dadpea.texal.Texal;
+import io.github.dadpea.texal.TexalPlayer;
 import io.github.dadpea.texal.player.state.EditPlotState;
 import io.github.dadpea.texal.player.state.ServerBuildState;
 import io.github.dadpea.texal.style.Prefix;
@@ -16,7 +17,7 @@ public class ServerBuildCommand implements CommandExecutor {
             return false;
 
         Player p = (Player) sender;
-        Texal.setPlayerState(p, new ServerBuildState());
+        TexalPlayer.create(p).setState(new ServerBuildState());
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Now in server build.");
         return true;
     }

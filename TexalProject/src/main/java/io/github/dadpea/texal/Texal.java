@@ -1,23 +1,19 @@
 package io.github.dadpea.texal;
 
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonWriter;
-import io.github.dadpea.texal.events.*;
+import io.github.dadpea.texal.player.state.GlobalHandler;
+import io.github.dadpea.texal.player.state.LobbyState;
 import io.github.dadpea.texal.player.state.PlayerState;
-import io.github.dadpea.texal.plots.PlotPersistent;
-import io.github.dadpea.texal.plots.exceptions.MalformedDataException;
 import io.github.dadpea.texal.style.GlobalColors;
 import io.github.dadpea.texal.commands.*;
 import io.github.dadpea.texal.commands.itemManipulation.*;
+import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -25,8 +21,6 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.UUID;
 
 public final class Texal extends JavaPlugin implements Listener {
     public static Texal plugin;
@@ -34,7 +28,6 @@ public final class Texal extends JavaPlugin implements Listener {
     public static Scoreboard spawnBoard;
     public static String scoreboardTitle = GlobalColors.TEAL + "" + ChatColor.BOLD + ">" + GlobalColors.GREEN + "" + ChatColor.BOLD + "  TEXAL  " + GlobalColors.TEAL + ChatColor.BOLD + "<";
     public static ServerPersistent persistentData;
-    public static HashMap<UUID, PlayerState> playerStates = new HashMap<>();
 
      @Override
     public void onEnable() {
@@ -80,12 +73,13 @@ public final class Texal extends JavaPlugin implements Listener {
         this.getCommand("sll").setExecutor(new LoreLineCommand());
         this.getCommand("rll").setExecutor(new RemoveLoreLine());
         this.getCommand("rename").setExecutor(new RenameCommand());
+
+        this.getCommand("setrank").setExecutor(new SetRankCommand());
     }
 
     private void registerEvents() {
         this.getServer().getPluginManager().registerEvents(this, this);
-        this.getServer().getPluginManager().registerEvents(new JoinEvent(), this);
-        this.getServer().getPluginManager().registerEvents(new QuitEvent(), this);
+        this.getServer().getPluginManager().registerEvents(new GlobalHandler(), this);
     }
 
     private void loadPersistent() {
@@ -111,55 +105,35 @@ public final class Texal extends JavaPlugin implements Listener {
 
     private void tick() {
         for (Player p : Bukkit.getOnlinePlayers()) {
-            PlayerState s = playerStates.get(p.getUniqueId());
+            PlayerState s = TexalPlayer.create(p).getState();
             if (s != null) {
                 s.onTick(p);
             }
         }
     }
 
-    public static void setPlayerState(Player p, PlayerState s) {
-        PlayerState old = getPlayerState(p);
-        if (old!=null) old.onExit(p);
-
-        playerStates.put(p.getUniqueId(), s);
-        s.onEnter(p);
-    }
-
-    public static PlayerState getPlayerState(Player p) {
-        return playerStates.get(p.getUniqueId());
-    }
-
-    public static void removePlayerState(Player p) {
-        playerStates.get(p.getUniqueId()).onExit(p);
-        playerStates.remove(p.getUniqueId());
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        TexalPlayer.create(e.getPlayer()).setState(new LobbyState());
+        e.setJoinMessage("");
+        Player p = e.getPlayer();
+        for (Player p1 : Bukkit.getOnlinePlayers()) {
+            p1.sendMessage(Prefix.PREFIX_SERVER_INFO + "" + p.getDisplayName() + " joined!");
+        }
     }
 
     @EventHandler
-    public void onClick(PlayerInteractEvent e) { getPlayerState(e.getPlayer()).onInteract(e); }
-    @EventHandler
-    public void onSwapHands(PlayerSwapHandItemsEvent e) { getPlayerState(e.getPlayer()).onSwapHands(e); }
-    @EventHandler
-    public void onRespawn(PlayerRespawnEvent e) { getPlayerState(e.getPlayer()).onRespawn(e); }
-    @EventHandler
-    public void onDropItem(PlayerDropItemEvent e) { getPlayerState(e.getPlayer()).onDropItem(e); }
-    @EventHandler
-    public void onSwapSlots(PlayerChangedMainHandEvent e) { getPlayerState(e.getPlayer()).onSwapSlots(e); }
-    @EventHandler
-    public void onSneak(PlayerToggleSneakEvent e) { getPlayerState(e.getPlayer()).onSneak(e); }
-    @EventHandler
-    public void onSprint(PlayerToggleSprintEvent e) { getPlayerState(e.getPlayer()).onSprint(e); }
-    @EventHandler
-    public void onDeath(PlayerDeathEvent e) { getPlayerState(e.getEntity()).onDeath(e); }
-    @EventHandler
-    public void onDamage(EntityDamageEvent e) {
-        if (e.getEntity() instanceof Player)
-            getPlayerState((Player) e.getEntity()).onDamage(e);
-    }
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent e) { getPlayerState(e.getPlayer()).onBlockBreak(e); }
-    @EventHandler
-    public void onChat(AsyncPlayerChatEvent e) {
-        getPlayerState(e.getPlayer()).onChat(e);
+    public void onQuit(PlayerQuitEvent e) {
+        e.setQuitMessage("");
+
+        Player p = e.getPlayer();
+        TexalPlayer tp = TexalPlayer.create(p);
+
+        for (Player p1 : Bukkit.getOnlinePlayers()) {
+            p1.sendMessage(Prefix.PREFIX_SERVER_INFO + "" + p.getDisplayName() + " left.");
+        }
+
+        tp.saveData();
+        tp.decache();
     }
 }

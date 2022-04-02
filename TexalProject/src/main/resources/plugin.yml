@@ -39,3 +39,6 @@ commands:
   svbuild:
     description: dont use simple brain
     usage: /svbuild
+  setrank:
+    description: Set the rank for a player.
+    usage: /addrank <Player> <Rank> <true/false>

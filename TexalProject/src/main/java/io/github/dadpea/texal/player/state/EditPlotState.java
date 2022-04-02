@@ -1,6 +1,7 @@
 package io.github.dadpea.texal.player.state;
 
 import io.github.dadpea.texal.Texal;
+import io.github.dadpea.texal.TexalPlayer;
 import io.github.dadpea.texal.plots.Plot;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -98,7 +99,7 @@ public class EditPlotState implements PlayerState {
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         for (Player p: Bukkit.getOnlinePlayers()) {
-            PlayerState ps = Texal.getPlayerState(p);
+            PlayerState ps = TexalPlayer.create(p).getState();
             if(ps instanceof EditPlotState) {
                 EditPlotState eps = (EditPlotState) ps;
                 if (eps.id == this.id ) {

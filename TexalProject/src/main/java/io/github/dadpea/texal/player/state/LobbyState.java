@@ -1,6 +1,7 @@
 package io.github.dadpea.texal.player.state;
 
 import io.github.dadpea.texal.Texal;
+import io.github.dadpea.texal.TexalPlayer;
 import io.github.dadpea.texal.item.ItemFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -88,7 +89,7 @@ public class LobbyState implements PlayerState {
     public void onChat(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         for (Player p: Bukkit.getOnlinePlayers()) {
-            PlayerState ps = Texal.getPlayerState(p);
+            PlayerState ps = TexalPlayer.create(p).getState();
             if(ps instanceof LobbyState || ps instanceof ServerBuildState) {
                 p.sendMessage(e.getPlayer().getDisplayName() + ": " + e.getMessage());
             }
