@@ -1,5 +1,6 @@
 package io.github.dadpea.texal.commands.itemManipulation;
 
+import io.github.dadpea.texal.commands.TexalCommand;
 import io.github.dadpea.texal.style.ColorConvert;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Material;
@@ -13,9 +14,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoreLineCommand implements CommandExecutor {
+public class LoreLineCommand extends TexalCommand {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean runCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player)) {
             return false;
         }
@@ -62,5 +63,11 @@ public class LoreLineCommand implements CommandExecutor {
 
         p.getInventory().setItemInMainHand(item);
         return true;
+    }
+    public boolean hasPermissions(CommandSender sender) {
+        return true;
+    }
+    public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }

@@ -42,3 +42,7 @@ commands:
   setrank:
     description: Set the rank for a player.
     usage: /addrank <Player> <Rank> <true/false>
+  chat:
+    description: Set your chat scope.
+    usage: /chat <Global/Local/None>
+    aliases: [c]

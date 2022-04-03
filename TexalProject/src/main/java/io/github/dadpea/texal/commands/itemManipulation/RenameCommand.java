@@ -1,5 +1,6 @@
 package io.github.dadpea.texal.commands.itemManipulation;
 
+import io.github.dadpea.texal.commands.TexalCommand;
 import io.github.dadpea.texal.style.ColorConvert;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Material;
@@ -10,9 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class RenameCommand implements CommandExecutor {
+import java.util.List;
+
+public class RenameCommand extends TexalCommand {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean runCommand(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) return false;
 
         Player p = (Player) sender;
@@ -36,5 +39,11 @@ public class RenameCommand implements CommandExecutor {
         item.setItemMeta(m);
         p.getInventory().setItemInMainHand(item);
         return true;
+    }
+    public boolean hasPermissions(CommandSender sender) {
+        return true;
+    }
+    public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }

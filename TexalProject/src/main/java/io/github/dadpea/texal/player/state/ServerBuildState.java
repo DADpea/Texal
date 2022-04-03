@@ -13,18 +13,19 @@ import org.bukkit.event.player.*;
 public class ServerBuildState implements PlayerState{
 
     @Override
-    public void onEnter(Player p) {
+    public void onEnter(TexalPlayer tp) {
+        Player p = tp.getPlayer();
         p.setGameMode(GameMode.CREATIVE);
     }
 
     @Override
-    public void onExit(Player p) {
-
+    public void onExit(TexalPlayer tp) {
+        Player p = tp.getPlayer();
     }
 
     @Override
-    public void onTick(Player p) {
-
+    public void onTick(TexalPlayer tp) {
+        Player p = tp.getPlayer();
     }
 
     @Override
@@ -79,12 +80,12 @@ public class ServerBuildState implements PlayerState{
 
     @Override
     public void onChat(AsyncPlayerChatEvent e) {
-        e.setCancelled(true);
-        for (Player p: Bukkit.getOnlinePlayers()) {
-            PlayerState ps = TexalPlayer.create(p).getState();
-            if(ps instanceof LobbyState || ps instanceof ServerBuildState) {
-                p.sendMessage(e.getPlayer().getDisplayName() + ": " + e.getMessage());
-            }
-        }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof ServerBuildState);
     }
 }
+

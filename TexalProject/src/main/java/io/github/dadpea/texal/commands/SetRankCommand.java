@@ -12,9 +12,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SetRankCommand implements CommandExecutor {
+import java.util.List;
+
+public class SetRankCommand extends TexalCommand {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean runCommand(CommandSender sender, String[] args) {
         if (args.length<3) {
             sender.sendMessage(Prefix.PREFIX_FAILURE + "Not enough input.");
             return true;
@@ -35,9 +37,9 @@ public class SetRankCommand implements CommandExecutor {
             return true;
         }
 
-        if (args[2].toLowerCase().equals("true")) {
+        if (args[2].equalsIgnoreCase("true")) {
             p.getRanks().addRank(rank);
-        } else if (args[2].toLowerCase().equals("false")) {
+        } else if (args[2].equalsIgnoreCase("false")) {
             p.getRanks().removeRank(rank);
         } else {
             sender.sendMessage(Prefix.PREFIX_FAILURE + "Invalid boolean.");
@@ -45,6 +47,13 @@ public class SetRankCommand implements CommandExecutor {
         }
 
         sender.sendMessage(Prefix.PREFIX_SUCCESS + "Success.");
+
         return true;
+    }
+    public boolean hasPermissions(CommandSender sender) {
+        return true;
+    }
+    public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }
