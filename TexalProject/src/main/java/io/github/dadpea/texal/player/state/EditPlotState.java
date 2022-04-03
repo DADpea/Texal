@@ -109,4 +109,9 @@ public class EditPlotState implements PlayerState {
         EditPlotState ops = (EditPlotState) o;
         return ops.id == this.id;
     }
+
+    @Override
+    public boolean canEditItems() {
+        return true;
+    }
 }

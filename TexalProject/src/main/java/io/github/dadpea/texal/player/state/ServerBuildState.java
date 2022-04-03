@@ -87,5 +87,10 @@ public class ServerBuildState implements PlayerState{
     public boolean equals(Object o) {
         return (o instanceof ServerBuildState);
     }
+
+    @Override
+    public boolean canEditItems() {
+        return true;
+    }
 }
 

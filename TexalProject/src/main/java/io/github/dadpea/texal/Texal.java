@@ -1,12 +1,15 @@
 package io.github.dadpea.texal;
 
 import com.google.gson.Gson;
+import io.github.dadpea.texal.commands.admin.*;
+import io.github.dadpea.texal.commands.global.ChatScopeCommand;
+import io.github.dadpea.texal.commands.global.LeaveCommand;
 import io.github.dadpea.texal.player.state.GlobalHandler;
 import io.github.dadpea.texal.player.state.LobbyState;
 import io.github.dadpea.texal.player.state.PlayerState;
 import io.github.dadpea.texal.style.GlobalColors;
 import io.github.dadpea.texal.commands.*;
-import io.github.dadpea.texal.commands.itemManipulation.*;
+import io.github.dadpea.texal.commands.editing.*;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

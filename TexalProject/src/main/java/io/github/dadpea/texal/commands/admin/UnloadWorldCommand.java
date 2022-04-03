@@ -1,5 +1,9 @@
-package io.github.dadpea.texal.commands;
+package io.github.dadpea.texal.commands.admin;
 
+import io.github.dadpea.texal.commands.TexalCommand;
+import io.github.dadpea.texal.commands.errors.CommandError;
+import io.github.dadpea.texal.commands.errors.CustomError;
+import io.github.dadpea.texal.commands.errors.PlayerOnlyError;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -9,37 +13,28 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class UnloadWorldCommand extends TexalCommand {
+public class UnloadWorldCommand extends AdminCommand {
     @Override
-    public boolean runCommand(CommandSender sender, String[] args) {
-
-
-        if (!(sender instanceof Player)) {
-            return false;
-        }
+    public void runCommand(CommandSender sender, String[] args) throws CommandError {
+        if (!(sender instanceof Player))
+            throw new PlayerOnlyError();
 
         Player p = (Player) sender;
         if (args.length == 0) {
             p.sendMessage(Prefix.PREFIX_FAILURE + "Available worlds " + Bukkit.getServer().getWorlds());
-            return true;
+            return;
         }
         if (Bukkit.getServer().getWorld(args[0]) == null) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "World not loaded.");
-            return true;
+            throw new CustomError("World not loaded.");
         }
         p.sendMessage(Prefix.PREFIX_INFO + "Unloading " + args[0]);
         if(!(Bukkit.getServer().unloadWorld(Bukkit.getServer().getWorld(args[0]), true))) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Failed to unload " + args[0]);
-            return true;
+            throw new CustomError("Failed to unload.");
         }
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Unloaded " + args[0]);
-        return true;
 
     }
 
-    public boolean hasPermissions(CommandSender sender) {
-        return true;
-    }
     public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
         return null;
     }

@@ -1,7 +1,10 @@
-package io.github.dadpea.texal.commands;
+package io.github.dadpea.texal.commands.admin;
 
 import io.github.dadpea.texal.Texal;
 import io.github.dadpea.texal.TexalPlayer;
+import io.github.dadpea.texal.commands.TexalCommand;
+import io.github.dadpea.texal.commands.errors.*;
+import io.github.dadpea.texal.commands.errors.InternalError;
 import io.github.dadpea.texal.player.state.EditPlotState;
 import io.github.dadpea.texal.plots.Plot;
 import io.github.dadpea.texal.plots.PlotSize;
@@ -15,43 +18,35 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class JoinPlotCommand extends TexalCommand {
+public class JoinPlotCommand extends AdminCommand {
     @Override
-    public boolean runCommand(CommandSender sender, String[] args) {
+    public void runCommand(CommandSender sender, String[] args) throws CommandError {
         if (!(sender instanceof Player))
-            return false;
+            throw new PlayerOnlyError();
 
         Player p = (Player) sender;
         if (args.length==0) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Expected input.");
-            return true;
+            throw new MissingParameterError("Plot ID");
         }
 
         int id;
         try {
             id = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Input is not a number.");
-            return true;
+            throw new InvalidParameterError("Plot ID");
         }
 
         Plot plot;
         try {
             plot = new Plot(id);
         } catch(NoSuchPlotException e) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Invalid ID.");
-            return true;
+            throw new CustomError("Invalid ID.");
         } catch (MalformedDataException e) {
             Texal.plugin.getLogger().severe("Malformed data received on plot " + id);
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Internal error, contact admins.");
-            return true;
+            throw new InternalError();
         }
 
         TexalPlayer.create(p).setState(new EditPlotState(plot));
-        return true;
-    }
-    public boolean hasPermissions(CommandSender sender) {
-        return true;
     }
     public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
         return null;

@@ -26,4 +26,7 @@ public interface PlayerState extends Listener {
     void onBlockBreak(BlockBreakEvent e);
     void onChat(AsyncPlayerChatEvent e);
 
+    default boolean canEditItems() {
+        return false;
+    }
 }

@@ -1,11 +1,13 @@
-package io.github.dadpea.texal.commands.itemManipulation;
+package io.github.dadpea.texal.commands.editing;
 
-import io.github.dadpea.texal.commands.TexalCommand;
+import io.github.dadpea.texal.commands.errors.CommandError;
+import io.github.dadpea.texal.commands.errors.CustomError;
+import io.github.dadpea.texal.commands.errors.MissingParameterError;
+import io.github.dadpea.texal.commands.errors.PlayerOnlyError;
 import io.github.dadpea.texal.style.ColorConvert;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,22 +15,22 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class RenameCommand extends TexalCommand {
+public class RenameCommand extends EditingCommand {
     @Override
-    public boolean runCommand(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player)) return false;
+    public void runCommand(CommandSender sender, String[] args) throws CommandError {
+        if (!(sender instanceof Player))
+            throw new PlayerOnlyError();
 
         Player p = (Player) sender;
 
         if (args.length == 0) {
             p.sendMessage(Prefix.PREFIX_FAILURE + "Usage: /rename <string>");
-            return true;
+            throw new MissingParameterError("Name");
         }
 
         ItemStack item = p.getInventory().getItemInMainHand();
         if (item.getType().equals(Material.AIR)) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Not holding an item.");
-            return true;
+            throw new CustomError("Not holding an item.");
         }
 
         ItemMeta m = item.getItemMeta();
@@ -38,10 +40,7 @@ public class RenameCommand extends TexalCommand {
         m.setDisplayName(ColorConvert.translateColorCodes(text));
         item.setItemMeta(m);
         p.getInventory().setItemInMainHand(item);
-        return true;
-    }
-    public boolean hasPermissions(CommandSender sender) {
-        return true;
+        return;
     }
     public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
         return null;

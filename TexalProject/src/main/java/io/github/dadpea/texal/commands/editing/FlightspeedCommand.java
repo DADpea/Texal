@@ -1,11 +1,11 @@
-package io.github.dadpea.texal.commands;
+package io.github.dadpea.texal.commands.editing;
 
-import io.github.dadpea.texal.TexalPlayer;
-import io.github.dadpea.texal.player.state.EditPlotState;
-import io.github.dadpea.texal.player.state.ServerBuildState;
+import io.github.dadpea.texal.commands.errors.CommandError;
+import io.github.dadpea.texal.commands.errors.InvalidParameterError;
+import io.github.dadpea.texal.commands.errors.MissingParameterError;
+import io.github.dadpea.texal.commands.errors.PlayerOnlyError;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,37 +13,29 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class FlightspeedCommand extends TexalCommand {
+public class FlightspeedCommand extends EditingCommand {
     @Override
-    public boolean runCommand(CommandSender sender, String[] args) {
+    public void runCommand(CommandSender sender, String[] args) throws CommandError {
         if (!(sender instanceof Player))
-            return false;
+            throw new PlayerOnlyError();
 
         Player p = (Player) sender;
         if (args.length==0) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Expected input.");
-            return true;
+            throw new MissingParameterError("Flight speed");
         }
 
         int fs;
         try {
             fs = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Input is not a number.");
-            return true;
+            throw new InvalidParameterError("Flight speed");
         }
 
         if (fs < -1000) fs = -1000;
         if (fs > 1000) fs = 1000;
         p.setFlySpeed(fs / 1000f);
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Flightspeed set to: " + fs + "%.");
-        return true;
-    }
-    public boolean hasPermissions(CommandSender sender) {
-        if (!(sender instanceof Player)) return false;
-
-        TexalPlayer p = TexalPlayer.create((Player) sender);
-        return p.getState() instanceof EditPlotState || p.getState() instanceof ServerBuildState;
+        return;
     }
 
     public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {

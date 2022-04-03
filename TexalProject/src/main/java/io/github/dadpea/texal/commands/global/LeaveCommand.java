@@ -1,7 +1,9 @@
-package io.github.dadpea.texal.commands;
+package io.github.dadpea.texal.commands.global;
 
 import io.github.dadpea.texal.Texal;
 import io.github.dadpea.texal.TexalPlayer;
+import io.github.dadpea.texal.commands.TexalCommand;
+import io.github.dadpea.texal.commands.errors.PlayerOnlyError;
 import io.github.dadpea.texal.player.state.EditPlotState;
 import io.github.dadpea.texal.player.state.LobbyState;
 import io.github.dadpea.texal.plots.Plot;
@@ -15,19 +17,16 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class LeaveCommand extends TexalCommand{
+public class LeaveCommand extends GlobalCommand {
     @Override
-    public boolean runCommand(CommandSender sender, String[] args) {
+    public void runCommand(CommandSender sender, String[] args) throws PlayerOnlyError {
         if (!(sender instanceof Player))
-            return false;
+            throw new PlayerOnlyError();
 
         Player p = (Player) sender;
 
         TexalPlayer.create(p).setState(new LobbyState());
-        return true;
-    }
-    public boolean hasPermissions(CommandSender sender) {
-        return true;
+        return;
     }
     public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
         return null;

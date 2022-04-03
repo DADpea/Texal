@@ -1,5 +1,9 @@
-package io.github.dadpea.texal.commands;
+package io.github.dadpea.texal.commands.admin;
 
+import io.github.dadpea.texal.commands.TexalCommand;
+import io.github.dadpea.texal.commands.errors.CommandError;
+import io.github.dadpea.texal.commands.errors.MissingParameterError;
+import io.github.dadpea.texal.commands.errors.PlayerOnlyError;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -12,16 +16,15 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class LoadWorldCommand extends TexalCommand {
+public class LoadWorldCommand extends AdminCommand {
     @Override
-    public boolean runCommand(CommandSender sender, String[] args) {
+    public void runCommand(CommandSender sender, String[] args) throws CommandError {
         if(!(sender instanceof Player))
-            return false;
+            throw new PlayerOnlyError();
 
         Player p = (Player) sender;
         if (args.length==0) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Need world name.");
-            return true;
+            throw new MissingParameterError("World Name");
         }
 
         final WorldCreator worldC = new WorldCreator(args[0]);
@@ -29,7 +32,7 @@ public class LoadWorldCommand extends TexalCommand {
         if (!(checkWorld == null)) {
             p.sendMessage(Prefix.PREFIX_SUCCESS + "Teleported!");
             p.teleport(new Location(checkWorld, 0, 50, 0));
-            return true;
+            return;
         }
 
         worldC.generateStructures(false);
@@ -39,10 +42,7 @@ public class LoadWorldCommand extends TexalCommand {
         System.out.println(Bukkit.getServer().getWorlds());
         p.teleport(new Location(world, 0, 50, 0));
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Teleported!");
-        return true;
-    }
-    public boolean hasPermissions(CommandSender sender) {
-        return true;
+        return;
     }
     public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
         return null;
