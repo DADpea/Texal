@@ -39,7 +39,11 @@ public final class TexalPlayer {
         return this.state;
     }
     public void setState(PlayerState s) {
+        if (this.state != null) {
+            this.state.onExit(this);
+        }
         this.state = s;
+        s.onEnter(this);
     }
 
     /**
@@ -81,10 +85,12 @@ public final class TexalPlayer {
     }
     protected void saveData() {
         File f = new File(directory + this.getPlayer().getUniqueId() + ".json");
-        try (Writer r = new FileWriter(f)) {
+        try {
             if (!f.exists()) f.createNewFile();
+            Writer r = new FileWriter(f);
             Gson g = new Gson();
             g.toJson(new PlayerPersistent(this.ranks), PlayerPersistent.class, r);
+            r.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,5 +98,9 @@ public final class TexalPlayer {
 
     protected void decache() {
         instances.remove(this.getPlayer().getUniqueId());
+    }
+
+    public void sendMessage(String s) {
+        this.getPlayer().sendMessage(s);
     }
 }

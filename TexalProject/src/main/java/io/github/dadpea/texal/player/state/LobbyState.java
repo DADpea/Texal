@@ -22,7 +22,8 @@ public class LobbyState implements PlayerState {
     }
 
     @Override
-    public void onEnter(Player p) {
+    public void onEnter(TexalPlayer tp) {
+        Player p = tp.getPlayer();
         p.teleport(Texal.spawnPoint);
         p.setFlySpeed(0.1f);
         p.setWalkSpeed(0.2f);
@@ -60,12 +61,13 @@ public class LobbyState implements PlayerState {
     }
 
     @Override
-    public void onExit(Player p) {
-
+    public void onExit(TexalPlayer tp) {
+        Player p = tp.getPlayer();
     }
 
     @Override
-    public void onTick(Player p) {
+    public void onTick(TexalPlayer tp) {
+        Player p = tp.getPlayer();
         p.setFoodLevel(20);
         p.setSaturation(20f);
     }
@@ -87,13 +89,6 @@ public class LobbyState implements PlayerState {
 
     @Override
     public void onChat(AsyncPlayerChatEvent e) {
-        e.setCancelled(true);
-        for (Player p: Bukkit.getOnlinePlayers()) {
-            PlayerState ps = TexalPlayer.create(p).getState();
-            if(ps instanceof LobbyState || ps instanceof ServerBuildState) {
-                p.sendMessage(e.getPlayer().getDisplayName() + ": " + e.getMessage());
-            }
-        }
     }
 
     @Override
@@ -131,5 +126,8 @@ public class LobbyState implements PlayerState {
         e.setCancelled(true);
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof LobbyState);
+    }
 }

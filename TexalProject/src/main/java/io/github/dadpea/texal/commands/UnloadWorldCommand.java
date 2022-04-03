@@ -7,9 +7,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class UnloadWorldCommand implements CommandExecutor {
+import java.util.List;
+
+public class UnloadWorldCommand extends TexalCommand {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean runCommand(CommandSender sender, String[] args) {
 
 
         if (!(sender instanceof Player)) {
@@ -32,5 +34,13 @@ public class UnloadWorldCommand implements CommandExecutor {
         }
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Unloaded " + args[0]);
         return true;
+
+    }
+
+    public boolean hasPermissions(CommandSender sender) {
+        return true;
+    }
+    public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }

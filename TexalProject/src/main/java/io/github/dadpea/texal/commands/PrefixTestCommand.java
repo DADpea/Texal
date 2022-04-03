@@ -6,11 +6,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 import static io.github.dadpea.texal.style.Prefix.*;
 
-public class PrefixTestCommand implements CommandExecutor {
+public class PrefixTestCommand extends TexalCommand {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean runCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player))
             return false;
 
@@ -20,5 +22,11 @@ public class PrefixTestCommand implements CommandExecutor {
         p.sendMessage(PREFIX_INFO + "Info message");
         p.sendMessage(PREFIX_SERVER_INFO + "Server Info message");
         return true;
+    }
+    public boolean hasPermissions(CommandSender sender) {
+        return true;
+    }
+    public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }

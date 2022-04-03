@@ -57,24 +57,20 @@ public final class Texal extends JavaPlugin implements Listener {
 
     @SuppressWarnings("all")
     private void registerCommands() {
-        this.getCommand("fs").setExecutor(new FlightspeedCommand());
-        this.getCommand("flightspeed").setExecutor(new FlightspeedCommand());
+        TexalCommand.registerCommand(new FlightspeedCommand(), "flightspeed");
+        TexalCommand.registerCommand(new PrefixTestCommand(), "prefixtest"); // temp
+        TexalCommand.registerCommand(new LoadWorldCommand(), "loadworld"); // temp
+        TexalCommand.registerCommand(new UnloadWorldCommand(), "unloadworld"); // temp
+        TexalCommand.registerCommand(new NewPlotCommand(), "newplot"); // temp
+        TexalCommand.registerCommand(new JoinPlotCommand(), "joinplot"); // temp
+        TexalCommand.registerCommand(new LeaveCommand(), "spawn");
+        TexalCommand.registerCommand(new ServerBuildCommand(), "svbuild");
+        TexalCommand.registerCommand(new LoreLineCommand(), "sll");
+        TexalCommand.registerCommand(new RemoveLoreLine(), "rll");
+        TexalCommand.registerCommand(new RenameCommand(), "rename");
+        TexalCommand.registerCommand(new SetRankCommand(), "setrank");
+        TexalCommand.registerCommand(new ChatScopeCommand(), "c");
 
-        this.getCommand("prefixtest").setExecutor(new PrefixTestCommand());
-
-        this.getCommand("loadworld").setExecutor(new LoadWorldCommand()); // temp
-        this.getCommand("unloadworld").setExecutor(new UnloadWorldCommand()); // temp
-
-        this.getCommand("newplot").setExecutor(new NewPlotCommand()); // temp
-        this.getCommand("joinplot").setExecutor(new JoinPlotCommand()); // temp
-        this.getCommand("spawn").setExecutor(new LeaveCommand()); // temp
-        this.getCommand("svbuild").setExecutor(new ServerBuildCommand());
-
-        this.getCommand("sll").setExecutor(new LoreLineCommand());
-        this.getCommand("rll").setExecutor(new RemoveLoreLine());
-        this.getCommand("rename").setExecutor(new RenameCommand());
-
-        this.getCommand("setrank").setExecutor(new SetRankCommand());
     }
 
     private void registerEvents() {
@@ -107,7 +103,7 @@ public final class Texal extends JavaPlugin implements Listener {
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerState s = TexalPlayer.create(p).getState();
             if (s != null) {
-                s.onTick(p);
+                s.onTick(TexalPlayer.create(p));
             }
         }
     }
@@ -135,5 +131,11 @@ public final class Texal extends JavaPlugin implements Listener {
 
         tp.saveData();
         tp.decache();
+    }
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent e) {
+        e.setCancelled(true);
+        TexalPlayer tp = TexalPlayer.create(e.getPlayer());
+        tp.getChatScope().sendMessage(tp, e.getMessage());
     }
 }

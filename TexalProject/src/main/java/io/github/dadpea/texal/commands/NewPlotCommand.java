@@ -11,9 +11,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class NewPlotCommand implements CommandExecutor {
+import java.util.List;
+
+public class NewPlotCommand extends TexalCommand {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean runCommand(CommandSender sender, String[] args) {
         if(!(sender instanceof Player))
             return false;
 
@@ -30,5 +32,11 @@ public class NewPlotCommand implements CommandExecutor {
         TexalPlayer.create(p).setState(new EditPlotState(plot));
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Joined plot: " + plot.getId() + ".");
         return true;
+    }
+    public boolean hasPermissions(CommandSender sender) {
+        return true;
+    }
+    public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }
