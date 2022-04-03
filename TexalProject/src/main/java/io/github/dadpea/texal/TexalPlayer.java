@@ -2,6 +2,7 @@ package io.github.dadpea.texal;
 
 import com.google.gson.Gson;
 import io.github.dadpea.texal.chat.ChatScope;
+import io.github.dadpea.texal.chat.ScopeGlobal;
 import io.github.dadpea.texal.chat.ScopeLocal;
 import io.github.dadpea.texal.player.state.LobbyState;
 import io.github.dadpea.texal.player.state.PlayerState;
@@ -59,7 +60,7 @@ public final class TexalPlayer {
     private TexalPlayer(Player p) {
         this.player = p;
         this.state = new LobbyState();
-        this.chatScope = new ScopeLocal();
+        this.chatScope = new ScopeGlobal();
         File f = new File(directory + p.getUniqueId() + ".json");
         if (f.exists()) {
             loadData();
