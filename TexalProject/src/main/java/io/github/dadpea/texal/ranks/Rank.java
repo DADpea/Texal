@@ -5,7 +5,7 @@ import io.github.dadpea.texal.style.GlobalColors;
 public enum Rank implements Comparable<Rank> {
     BENEFACTOR(10, GlobalColors.GRAY + "[" + GlobalColors.DARK_TEAL + "Benefactor" + GlobalColors.GRAY + "] ", GlobalColors.TEAL),
     MOD(20, GlobalColors.GRAY + "[" + GlobalColors.DARK_GREEN + "Mod" + GlobalColors.GRAY + "] ", GlobalColors.GREEN),
-    DEV(30, GlobalColors.GRAY + "[" + GlobalColors.DARK_RED + "Admin" + GlobalColors.GRAY + "] ", GlobalColors.RED);
+    ADMIN(30, GlobalColors.GRAY + "[" + GlobalColors.DARK_YELLOW + "Admin" + GlobalColors.GRAY + "] ", GlobalColors.YELLOW);
 
     private final int importance;
     private final String prefix;
