@@ -61,9 +61,6 @@ public final class Texal extends JavaPlugin implements Listener {
     @SuppressWarnings("all")
     private void registerCommands() {
         TexalCommand.registerCommand(new FlightspeedCommand(), "flightspeed");
-        TexalCommand.registerCommand(new PrefixTestCommand(), "prefixtest"); // temp
-        TexalCommand.registerCommand(new LoadWorldCommand(), "loadworld"); // temp
-        TexalCommand.registerCommand(new UnloadWorldCommand(), "unloadworld"); // temp
         TexalCommand.registerCommand(new NewPlotCommand(), "newplot"); // temp
         TexalCommand.registerCommand(new JoinPlotCommand(), "joinplot"); // temp
         TexalCommand.registerCommand(new LeaveCommand(), "spawn");

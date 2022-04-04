@@ -18,6 +18,4 @@ public abstract class AdminCommand extends TexalCommand {
     @Override
     public abstract void runCommand(CommandSender sender, String[] args) throws CommandError;
 
-    @Override
-    public abstract List<String> tabComplete(CommandSender sender, Command command, String label, String[] args);
 }

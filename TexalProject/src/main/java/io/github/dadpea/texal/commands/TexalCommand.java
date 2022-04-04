@@ -3,11 +3,10 @@ package io.github.dadpea.texal.commands;
 import io.github.dadpea.texal.Texal;
 import io.github.dadpea.texal.TexalPlayer;
 import io.github.dadpea.texal.commands.errors.CommandError;
+import io.github.dadpea.texal.commands.errors.NoPermissionError;
 import io.github.dadpea.texal.commands.errors.PlayerOnlyError;
-import io.github.dadpea.texal.commands.parameter.ParameterBuilder;
 import io.github.dadpea.texal.commands.parameter.ParameterList;
 import io.github.dadpea.texal.ranks.Rank;
-import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
@@ -23,16 +22,13 @@ public abstract class TexalCommand implements CommandExecutor, TabCompleter {
             runCommand(sender, args);
             return true;
         } catch (CommandError e) {
-            sender.sendMessage(e.getMessage());
+            sender.sendMessage(e.toString());
             return true;
         }
     }
 
     public abstract void permissionCheck(CommandSender sender) throws CommandError;
     public abstract void runCommand(CommandSender sender, String[] args) throws CommandError;
-    public ParameterList getParams() {
-        return new ParameterBuilder().build();
-    }
 
     @Override
     final public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
@@ -45,7 +41,9 @@ public abstract class TexalCommand implements CommandExecutor, TabCompleter {
         }
     }
 
-    public abstract List<String> tabComplete(CommandSender sender, Command command, String label, String[] args);
+    public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
+        return Collections.emptyList();
+    }
 
     @SuppressWarnings("all")
     public static void registerCommand(TexalCommand executor, String command) {
@@ -62,5 +60,11 @@ public abstract class TexalCommand implements CommandExecutor, TabCompleter {
         } else {
             return 0;   // Command blocks and others have no permission level.
         }
+    }
+
+    protected static TexalPlayer playerOnly(CommandSender s) throws PlayerOnlyError {
+        if (!(s instanceof Player))
+            throw new PlayerOnlyError();
+        return TexalPlayer.create((Player) s);
     }
 }

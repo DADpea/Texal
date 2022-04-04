@@ -5,7 +5,7 @@ import io.github.dadpea.texal.style.Prefix;
 public abstract class CommandError extends Exception {
     @Override
     public String toString() {
-        return Prefix.PREFIX_FAILURE + this.getMessage();
+        return Prefix.PREFIX_FAILURE + this.getErrorMessage();
     }
 
     abstract protected String getErrorMessage();

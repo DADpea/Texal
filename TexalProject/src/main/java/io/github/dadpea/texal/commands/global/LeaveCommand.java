@@ -15,20 +15,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.List;
 
 public class LeaveCommand extends GlobalCommand {
     @Override
     public void runCommand(CommandSender sender, String[] args) throws PlayerOnlyError {
-        if (!(sender instanceof Player))
-            throw new PlayerOnlyError();
-
-        Player p = (Player) sender;
-
-        TexalPlayer.create(p).setState(new LobbyState());
-        return;
-    }
-    public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
-        return null;
+        playerOnly(sender).setState(new LobbyState());
     }
 }

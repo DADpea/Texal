@@ -1,9 +1,14 @@
 package io.github.dadpea.texal.commands.editing;
 
+import io.github.dadpea.texal.TexalPlayer;
+import io.github.dadpea.texal.chat.ChatScopes;
 import io.github.dadpea.texal.commands.errors.CommandError;
 import io.github.dadpea.texal.commands.errors.CustomError;
 import io.github.dadpea.texal.commands.errors.MissingParameterError;
 import io.github.dadpea.texal.commands.errors.PlayerOnlyError;
+import io.github.dadpea.texal.commands.parameter.EnumParameter;
+import io.github.dadpea.texal.commands.parameter.ParameterList;
+import io.github.dadpea.texal.commands.parameter.StringParameter;
 import io.github.dadpea.texal.style.ColorConvert;
 import io.github.dadpea.texal.style.Prefix;
 import org.bukkit.Material;
@@ -18,31 +23,22 @@ import java.util.List;
 public class RenameCommand extends EditingCommand {
     @Override
     public void runCommand(CommandSender sender, String[] args) throws CommandError {
-        if (!(sender instanceof Player))
-            throw new PlayerOnlyError();
+        TexalPlayer p = playerOnly(sender);
 
-        Player p = (Player) sender;
+        ParameterList pl = new ParameterList();
+        StringParameter name = pl.add(new StringParameter());
+        pl.testAgainst(args);
 
-        if (args.length == 0) {
-            p.sendMessage(Prefix.PREFIX_FAILURE + "Usage: /rename <string>");
-            throw new MissingParameterError("Name");
-        }
-
-        ItemStack item = p.getInventory().getItemInMainHand();
-        if (item.getType().equals(Material.AIR)) {
-            throw new CustomError("Not holding an item.");
-        }
+        ItemStack item = heldItem(p);
 
         ItemMeta m = item.getItemMeta();
-        String text = "";
-        for (int i = 0; i < args.length; i++) text += args[i] + (i==args.length-1 ? "" : " "); // so look i dont even know (REPLACE)
-
-        m.setDisplayName(ColorConvert.translateColorCodes(text));
+        m.setDisplayName(ColorConvert.translateColorCodes(name.getValue()));
         item.setItemMeta(m);
-        p.getInventory().setItemInMainHand(item);
-        return;
+        p.getPlayer().getInventory().setItemInMainHand(item);
     }
     public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
-        return null;
+        ParameterList pl = new ParameterList();
+        pl.add(new StringParameter());
+        return pl.tabComplete(args);
     }
 }

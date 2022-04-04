@@ -19,13 +19,8 @@ import java.util.List;
 public class ServerBuildCommand extends AdminCommand {
     @Override
     public void runCommand(CommandSender sender, String[] args) throws CommandError {
-        if (!(sender instanceof Player))
-            throw new PlayerOnlyError();
-
-        Player p = (Player) sender;
-        TexalPlayer.create(p).setState(new ServerBuildState());
+        TexalPlayer p = playerOnly(sender);
+        p.setState(new ServerBuildState());
         p.sendMessage(Prefix.PREFIX_SUCCESS + "Now in server build.");
-        return;
     }
-    public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) { return Collections.emptyList(); }
 }

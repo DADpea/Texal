@@ -5,6 +5,8 @@ import io.github.dadpea.texal.TexalPlayer;
 import io.github.dadpea.texal.commands.TexalCommand;
 import io.github.dadpea.texal.commands.errors.*;
 import io.github.dadpea.texal.commands.errors.InternalError;
+import io.github.dadpea.texal.commands.parameter.IntParameter;
+import io.github.dadpea.texal.commands.parameter.ParameterList;
 import io.github.dadpea.texal.player.state.EditPlotState;
 import io.github.dadpea.texal.plots.Plot;
 import io.github.dadpea.texal.plots.PlotSize;
@@ -21,20 +23,13 @@ import java.util.List;
 public class JoinPlotCommand extends AdminCommand {
     @Override
     public void runCommand(CommandSender sender, String[] args) throws CommandError {
-        if (!(sender instanceof Player))
-            throw new PlayerOnlyError();
+        TexalPlayer p = playerOnly(sender);
 
-        Player p = (Player) sender;
-        if (args.length==0) {
-            throw new MissingParameterError("Plot ID");
-        }
+        ParameterList pl = new ParameterList();
+        IntParameter idParam = pl.add(new IntParameter());
+        pl.testAgainst(args);
 
-        int id;
-        try {
-            id = Integer.parseInt(args[0]);
-        } catch (NumberFormatException e) {
-            throw new InvalidParameterError("Plot ID");
-        }
+        int id = idParam.getValue();
 
         Plot plot;
         try {
@@ -46,9 +41,11 @@ public class JoinPlotCommand extends AdminCommand {
             throw new InternalError();
         }
 
-        TexalPlayer.create(p).setState(new EditPlotState(plot));
+        p.setState(new EditPlotState(plot));
     }
     public List<String> tabComplete(CommandSender sender, Command command, String label, String[] args) {
-        return null;
+        ParameterList pl = new ParameterList();
+        pl.add(new IntParameter());
+        return pl.tabComplete(args);
     }
 }
