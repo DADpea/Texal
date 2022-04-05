@@ -35,6 +35,7 @@ public abstract class TexalCommand implements CommandExecutor, TabCompleter {
         try {
             if (permissionLevel(sender) < Rank.ADMIN.getImportance()) permissionCheck(sender);
             List<String> out = tabComplete(sender, command, label, args);
+            if (args.length>0) out = out.stream().filter(s -> s.toLowerCase().startsWith(args[args.length-1].toLowerCase())).toList();
             return out;
         } catch (CommandError e) {
             return Collections.emptyList();
