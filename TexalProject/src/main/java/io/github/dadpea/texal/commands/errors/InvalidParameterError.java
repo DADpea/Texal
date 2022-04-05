@@ -16,6 +16,6 @@ public class InvalidParameterError extends CommandError {
 
     @Override
     protected String getErrorMessage() {
-        return "Invalid parameter. Expected " + this.message;
+        return "Invalid parameter. " + this.message;
     }
 }
