@@ -46,3 +46,12 @@ commands:
     description: Set your chat scope.
     usage: /chat <Global/Local/None>
     aliases: [c]
+  enchant:
+    description: Enchant an item
+    usage: /enchant <Enchant> <Level>
+  rd:
+    description: reload
+    usage: /rd
+  hideflags:
+    description: Hide flags on item
+    usage: /hideflags

@@ -2,6 +2,7 @@ package io.github.dadpea.texal;
 
 import com.google.gson.Gson;
 import io.github.dadpea.texal.commands.admin.*;
+import io.github.dadpea.texal.commands.editing.items.*;
 import io.github.dadpea.texal.commands.global.ChatScopeCommand;
 import io.github.dadpea.texal.commands.global.LeaveCommand;
 import io.github.dadpea.texal.player.state.GlobalHandler;
@@ -70,7 +71,9 @@ public final class Texal extends JavaPlugin implements Listener {
         TexalCommand.registerCommand(new RenameCommand(), "rename");
         TexalCommand.registerCommand(new SetRankCommand(), "setrank");
         TexalCommand.registerCommand(new ChatScopeCommand(), "c");
-
+        TexalCommand.registerCommand(new EnchantCommand(), "enchant");
+        TexalCommand.registerCommand(new HideFlagsCommand(), "hideflags");
+        TexalCommand.registerCommand(new ReloadCommand(), "rd");
     }
 
     private void registerEvents() {
