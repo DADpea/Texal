@@ -30,7 +30,7 @@ public class EnumParameter<E extends Enum<E>> extends Parameter<E> {
     public List<String> getSuggestions() {
         List<String> out = new ArrayList<>();
         for (E t : enumType.getEnumConstants()) {
-            out.add(t.toString());
+            out.add(t.toString().toLowerCase());
         }
         return out;
     }
